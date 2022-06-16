@@ -1,0 +1,25 @@
+{
+  "author": "Lalit Chougule",
+  "name": "API Project Template",
+  "description": "Project template to create college project",
+  "identity": "threenine.ApiProject.1.0",
+  "shortName": "postgresql-api",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "CementSaleManagement",
+  "symbols": {
+    "Framework": {
+      "type": "parameter",
+      "description": "The target framework for the project.",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "net5.0"
+        },
+      ],
+      "defaultValue": "net5.0"
+    }
+  }
+}
