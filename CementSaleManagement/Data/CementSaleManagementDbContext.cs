@@ -11,7 +11,14 @@ namespace CementSaleManagement.Data
     {
         public DbSet<UserMaster> UserMasters { get; set; }
         public DbSet<RoleMaster> RoleMasters { get; set; }
+        public DbSet<Supplier_master> Supplier_master { get; set; }
 
+        public DbSet<ProductMaster> ProductMaster { get; set; }
+
+        public DbSet<WorkerMaster> WorkerMaster { get; set; }
+
+        public DbSet<Purchase_Order_Details> Purchase_Order_Details { get; set; }
+        
 
         public CementSaleManagementDbContext(DbContextOptions options) : base(options)
         {

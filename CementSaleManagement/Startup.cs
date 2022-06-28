@@ -31,12 +31,19 @@ namespace CementSaleManagement
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<CementSaleManagementDbContext>(x => x.UseNpgsql(_configuration.GetConnectionString("PostgreSQL")));
+            //services.AddDbContext<CementSaleManagementDbContext>(x => x.UseNpgsql(_configuration.GetConnectionString("PostgreSQL")));
 
             //services.AddDbContext<CementSaleManagementDbContext>(x => x.UseSqlServer(_configuration.GetConnectionString("SQLServer")));
+            services.AddDbContext<CementSaleManagementDbContext>(x => x.UseSqlite(_configuration.GetConnectionString("SQLite")));
 
             services.AddTransient<IUserMasterAppService, UserMasterAppService>();
             services.AddTransient<IRoleMasterAppService, RoleMasterAppService>();
+            services.AddTransient<IWorkerAppService, WorkerAppService>();
+
+            services.AddTransient<ISupplierMasterAppService, SupplierMasterAppService>();
+
+            services.AddTransient<IProdcutMasterAppServicecs, ProductAppService>();
+            services.AddTransient<IProductOrderDetailsAppService, ProductOrderDetailsAppService>();
 
             services.AddCors(options =>
             {

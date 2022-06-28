@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CementSaleManagement.Application
 {
-    public class RoleMasterAppService: IRoleMasterAppService
+    public class RoleMasterAppService : IRoleMasterAppService
     {
         private readonly CementSaleManagementDbContext _dbContext;
         private readonly IMapper _mapper;
@@ -53,14 +53,13 @@ namespace CementSaleManagement.Application
             return _mapper.Map<RoleMasterDto>(user);
         }
 
-        public async Task DeleteRoleAsync(int id)
-        {
-            var user = await _dbContext.RoleMasters.FirstOrDefaultAsync(x => x.Id == id);
+        
 
-            if (user != null)
-            {
-                _dbContext.RoleMasters.Remove(user);
-            }
-        }
+      
+
+      
+
+
+
     }
 }

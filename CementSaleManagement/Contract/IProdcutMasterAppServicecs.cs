@@ -6,16 +6,11 @@ using System.Threading.Tasks;
 
 namespace CementSaleManagement.Contract
 {
-    public interface IRoleMasterAppService
+    public interface IProdcutMasterAppServicecs
     {
-        Task CreateOrUpdateAsync(RoleMasterDto input);
-        Task<RoleMasterDto> GetRoleAsync(int id);
-       // Task DeleteRoleAsync(int id);
 
+        Task CreateOrUpdateProduct(ProductMasterDto input);
         
-
-        
-       
 
     }
 }
