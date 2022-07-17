@@ -16,5 +16,8 @@ namespace CementSaleManagement.Contract
 
         Task DeleteUserAsync(int id);
 
+        Task<LoginOutputDto> LoginAsync(LoginInputDto input);
+
+        Task<List<UserDropdownDto>> GetUserListPerRoleDropDownAsync(int roleId);
     }
 }

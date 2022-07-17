@@ -36,6 +36,8 @@ namespace CementSaleManagement.Contract.Dto
         public string Phone { get; set; }
 
         public int RoleId { get; set; }
+
+        public string Password { get; set; }
     }
 
     public class GetUserInput
@@ -45,5 +47,28 @@ namespace CementSaleManagement.Contract.Dto
         public int SkipCount { get; set; }
 
         public string Search { get; set; }
+    }
+
+    public class LoginInputDto
+    {
+        public string Email { get; set; }
+
+        public string Password { get; set; }
+    }
+
+    public class LoginOutputDto
+    {
+        public int Id { get; set; }
+
+        public RoleEnum Role { get; set; }
+
+        public bool IsSuccess { get; set; }
+    }
+
+    public class UserDropdownDto
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
     }
 }

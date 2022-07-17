@@ -11,4 +11,16 @@ namespace CementSaleManagement.Contract.Dto
 
         public string Name { get; set; }
     }
+
+    public class GetRoleInputDto : PagedResultInput
+    {
+
+    }
+
+    public class RoleDropdownDto
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+    }
 }

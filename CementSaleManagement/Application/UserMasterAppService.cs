@@ -93,5 +93,35 @@ namespace CementSaleManagement.Application
             }
         }
 
+        public async Task<LoginOutputDto> LoginAsync(LoginInputDto input)
+        {
+            var output = new LoginOutputDto();
+            var user = await _dbContext.UserMasters.FirstOrDefaultAsync(x => x.Email == input.Email);
+            if (user != null)
+            {
+                if (input.Password == user.Password)
+                {
+                    output.IsSuccess = true;
+                    output.Role = (RoleEnum)user.RoleId;
+                    output.Id = user.Id;
+                }
+                else
+                    return output;
+            }
+
+            return output;
+        }
+
+        public async Task<List<UserDropdownDto>> GetUserListPerRoleDropDownAsync(int roleId)
+        {
+            return await _dbContext.UserMasters.Where(x => x.RoleId == roleId)
+                .Select(x => new UserDropdownDto
+                {
+                    Id = x.Id,
+                    Name = $"{x.FirstName} {x.LastName}"
+                })
+                .ToListAsync();
+        }
+
     }
 }

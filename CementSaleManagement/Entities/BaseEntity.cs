@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace CementSaleManagement.Entities
 {
-    public class RoleMaster : BaseEntity
+    public class BaseEntity
     {
-        public string Name { get; set; }
+        public int Id { get; set; }
     }
 }

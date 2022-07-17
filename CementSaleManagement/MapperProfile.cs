@@ -22,18 +22,8 @@ namespace CementSaleManagement
             CreateMap<RoleMaster, RoleMasterDto>()
                 .ReverseMap();
 
-
-            CreateMap<Supplier_master ,SupplierCreateUpdateDto>()
+            CreateMap<Enquiry, EnquiryDto>()
                 .ReverseMap();
-
-            CreateMap<ProductMaster, ProductMasterCreateUpdateDto>()
-               .ReverseMap();
-
-            CreateMap<WorkerMaster, WorkerMasterCreateUpdateDto>()
-             .ReverseMap();
-
-            CreateMap<Purchase_Order_Details, ProductOrderDetailsDto>()
-            .ReverseMap();
         }
     }
 }

@@ -13,11 +13,9 @@ namespace CementSaleManagement.Controllers
     public class RoleMasterController : IRoleMasterAppService
     {
         private readonly IRoleMasterAppService _roleMasterAppService;
-      //  private readonly ISupplierMasterAppService _SuppplierMasterAppService;
         public RoleMasterController(IRoleMasterAppService roleMasterAppService)
         {
             _roleMasterAppService = roleMasterAppService;
-           // _SuppplierMasterAppService = SuppplierMasterAppService;
         }
 
         [HttpPost]
@@ -27,16 +25,12 @@ namespace CementSaleManagement.Controllers
             return _roleMasterAppService.CreateOrUpdateAsync(input);
         }
 
-
-
-     
-
-        //[HttpDelete]
-        //[Route("delete")]
-        //public virtual Task DeleteRoleAsync(int id)
-        //{
-        //    return _roleMasterAppService.DeleteRoleAsync(id);
-        //}
+        [HttpDelete]
+        [Route("delete")]
+        public virtual Task DeleteRoleAsync(int id)
+        {
+            return _roleMasterAppService.DeleteRoleAsync(id);
+        }
 
         [HttpGet]
         [Route("getRole")]
@@ -45,11 +39,18 @@ namespace CementSaleManagement.Controllers
             return _roleMasterAppService.GetRoleAsync(id);
         }
 
- 
-      
+        [HttpPost]
+        [Route("fetchRolesList")]
+        public virtual Task<PagedResultDto<RoleMasterDto>> FetchRolesListAsync(GetRoleInputDto input)
+        {
+            return _roleMasterAppService.FetchRolesListAsync(input);
+        }
 
-      
-     
-
+        [HttpGet]
+        [Route("getRoleDropdown")]
+        public virtual Task<List<RoleDropdownDto>> GetRoleDropdownAsync()
+        {
+            return _roleMasterAppService.GetRoleDropdownAsync();
+        }
     }
 }

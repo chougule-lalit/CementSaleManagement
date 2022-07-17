@@ -5,14 +5,18 @@ using System.Threading.Tasks;
 
 namespace CementSaleManagement.Entities
 {
-    public class ProductMaster : BaseEntity
+    public class PurchaseMaster : BaseEntity
     {
-        public string ProductName { get; set; }
+        public DateTime PurchaseDate { get; set; }
 
-        public string CompanyName { get; set; }
+        public int ItemCount { get; set; }
+
+        public decimal Amount { get; set; }
 
         public SupplierMaster SupplierMaster { get; set; }
 
         public int SupplierMasterId { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

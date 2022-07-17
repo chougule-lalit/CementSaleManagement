@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CementSaleManagement.Entities
+namespace CementSaleManagement.Contract.Dto
 {
-    public class WorkerMaster : BaseEntity
+    public class WorkerMasterDto : EntityDto
     {
         public string FirstName { get; set; }
 
@@ -24,8 +24,6 @@ namespace CementSaleManagement.Entities
         public string Email { get; set; }
 
         public string Phone { get; set; }
-
-        public UserMaster UserMaster { get; set; }
 
         public int UserMasterId { get; set; }
     }

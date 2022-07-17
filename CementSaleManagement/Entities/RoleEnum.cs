@@ -5,8 +5,11 @@ using System.Threading.Tasks;
 
 namespace CementSaleManagement.Entities
 {
-    public class RoleMaster : BaseEntity
+    public enum RoleEnum
     {
-        public string Name { get; set; }
+        Admin = 1,
+        Worker = 2,
+        Supplier = 3,
+        Customer = 4
     }
 }

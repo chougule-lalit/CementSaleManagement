@@ -3,14 +3,16 @@ using System;
 using CementSaleManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CementSaleManagement.Migrations
 {
     [DbContext(typeof(CementSaleManagementDbContext))]
-    partial class CementSaleManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220717143340_Intital")]
+    partial class Intital
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
