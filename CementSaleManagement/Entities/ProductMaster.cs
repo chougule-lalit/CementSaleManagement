@@ -11,8 +11,6 @@ namespace CementSaleManagement.Entities
 
         public string CompanyName { get; set; }
 
-        public SupplierMaster SupplierMaster { get; set; }
-
-        public int SupplierMasterId { get; set; }
+        public decimal Price { get; set; }
     }
 }

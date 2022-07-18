@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CementSaleManagement.Contract.Dto
 {
-    public class OrderDetailDto
+    public class OrderDetailDto : EntityDto
     {
         public int OrderMasterId { get; set; }
 

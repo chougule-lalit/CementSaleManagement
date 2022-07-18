@@ -13,9 +13,9 @@ namespace CementSaleManagement.Entities
 
         public decimal Amount { get; set; }
 
-        public CustomerMaster CustomerMaster { get; set; }
+        public UserMaster UserMaster { get; set; }
 
-        public int CustomerMasterId { get; set; }
+        public int UserMasterId { get; set; }
 
         public bool IsActive { get; set; }
     }

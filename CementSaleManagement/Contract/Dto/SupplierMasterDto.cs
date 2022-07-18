@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CementSaleManagement.Contract.Dto
 {
-    public class SupplierMasterDto
+    public class SupplierMasterDto : EntityDto
     {
         public string SupplierName { get; set; }
 
@@ -18,5 +18,17 @@ namespace CementSaleManagement.Contract.Dto
         public string Phone { get; set; }
 
         public int UserMasterId { get; set; }
+    }
+
+    public class GetSupplierMasterInputDto : PagedResultInput
+    {
+
+    }
+
+    public class SupplierMasterDropdownDto
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
     }
 }

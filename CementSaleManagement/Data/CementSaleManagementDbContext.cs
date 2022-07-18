@@ -17,10 +17,8 @@ namespace CementSaleManagement.Data
         public DbSet<CustomerMaster> CustomerMasters { get; set; }
         public DbSet<OrderMaster> OrderMasters { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
-        public DbSet<OrderCancellationMaster> OrderCancellationMasters { get; set; }
         public DbSet<PurchaseMaster> PurchaseMasters { get; set; }
-        public DbSet<PruchaseDetail> PruchaseDetails { get; set; }
-        public DbSet<PurchaseCancellationMaster> PurchaseCancellationMasters { get; set; }
+        public DbSet<PurchaseDetail> PurchaseDetails { get; set; }
         public DbSet<Enquiry> Enquiries { get; set; }
 
         public CementSaleManagementDbContext(DbContextOptions options) : base(options)
@@ -39,6 +37,13 @@ namespace CementSaleManagement.Data
             modelBuilder.Entity<UserMaster>().HasData(
                 new UserMaster { Id = 1, Email = "admin@admin.com", FirstName = "Admin", LastName = "Admin", Phone = "7898765467", RoleId = 1 }
                 );
+
+            modelBuilder.Entity<ProductMaster>().HasData(
+                new ProductMaster { Id = 1, ProductName = "OnePlus-Nord", CompanyName = "OnePlus", Price = 22000},
+                new ProductMaster { Id = 2, ProductName = "OnePlus-7 Pro", CompanyName = "OnePlus", Price = 51000 },
+                new ProductMaster { Id = 3, ProductName = "OnePlus-10", CompanyName = "OnePlus", Price = 80000 }
+                );
+
         }
     }
 }

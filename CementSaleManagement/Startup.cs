@@ -35,6 +35,10 @@ namespace CementSaleManagement
 
             services.AddTransient<IUserMasterAppService, UserMasterAppService>();
             services.AddTransient<IRoleMasterAppService, RoleMasterAppService>();
+            services.AddTransient<IEnquiryAppService, EnquiryAppService>();
+            services.AddTransient<IProductMasterAppService, ProductMasterAppService>();
+            services.AddTransient<IOrderAppService, OrderAppService>();
+            services.AddTransient<IPurchaseAppService, PurchaseAppService>();
 
             services.AddCors(options =>
             {

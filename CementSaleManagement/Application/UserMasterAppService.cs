@@ -47,6 +47,7 @@ namespace CementSaleManagement.Application
         {
             var data = from u in _dbContext.UserMasters
                        join r in _dbContext.RoleMasters on u.RoleId equals r.Id
+                       where  u.RoleId == input.RoleId
                        select new UserMasterDto
                        {
                            Email = u.Email,

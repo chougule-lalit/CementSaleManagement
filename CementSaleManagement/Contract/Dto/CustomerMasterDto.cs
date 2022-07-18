@@ -21,4 +21,16 @@ namespace CementSaleManagement.Contract.Dto
 
         public int UserMasterId { get; set; }
     }
+
+    public class GetCustomerMasterInputDto : PagedResultInput
+    {
+
+    }
+
+    public class CustomerMasterDropdownDto
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+    }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CementSaleManagement.Entities
 {
-    public class PruchaseDetail : BaseEntity
+    public class PurchaseDetail : BaseEntity
     {
         public PurchaseMaster PurchaseMaster { get; set; }
 

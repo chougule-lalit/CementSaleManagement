@@ -47,6 +47,8 @@ namespace CementSaleManagement.Contract.Dto
         public int SkipCount { get; set; }
 
         public string Search { get; set; }
+
+        public int RoleId { get; set; }
     }
 
     public class LoginInputDto

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CementSaleManagement.Migrations
 {
     [DbContext(typeof(CementSaleManagementDbContext))]
-    [Migration("20220717143340_Intital")]
-    partial class Intital
+    [Migration("20220718150324_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,23 +52,30 @@ namespace CementSaleManagement.Migrations
                     b.ToTable("CustomerMasters");
                 });
 
-            modelBuilder.Entity("CementSaleManagement.Entities.OrderCancellationMaster", b =>
+            modelBuilder.Entity("CementSaleManagement.Entities.Enquiry", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("CancelDate")
+                    b.Property<string>("Email")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("OrderMasterId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("FirstName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Remark")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderMasterId");
-
-                    b.ToTable("OrderCancellationMasters");
+                    b.ToTable("Enquiries");
                 });
 
             modelBuilder.Entity("CementSaleManagement.Entities.OrderDetail", b =>
@@ -107,9 +114,6 @@ namespace CementSaleManagement.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("CustomerMasterId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
@@ -119,9 +123,12 @@ namespace CementSaleManagement.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("UserMasterId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerMasterId");
+                    b.HasIndex("UserMasterId");
 
                     b.ToTable("OrderMasters");
                 });
@@ -135,20 +142,41 @@ namespace CementSaleManagement.Migrations
                     b.Property<string>("CompanyName")
                         .HasColumnType("TEXT");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ProductName")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("SupplierMasterId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("SupplierMasterId");
-
                     b.ToTable("ProductMasters");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CompanyName = "OnePlus",
+                            Price = 22000m,
+                            ProductName = "OnePlus-Nord"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CompanyName = "OnePlus",
+                            Price = 51000m,
+                            ProductName = "OnePlus-7 Pro"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CompanyName = "OnePlus",
+                            Price = 80000m,
+                            ProductName = "OnePlus-10"
+                        });
                 });
 
-            modelBuilder.Entity("CementSaleManagement.Entities.PruchaseDetail", b =>
+            modelBuilder.Entity("CementSaleManagement.Entities.PurchaseDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -172,26 +200,7 @@ namespace CementSaleManagement.Migrations
 
                     b.HasIndex("PurchaseMasterId");
 
-                    b.ToTable("PruchaseDetails");
-                });
-
-            modelBuilder.Entity("CementSaleManagement.Entities.PurchaseCancellationMaster", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("CancelDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("PurchaseMasterId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PurchaseMasterId");
-
-                    b.ToTable("PurchaseCancellationMasters");
+                    b.ToTable("PurchaseDetails");
                 });
 
             modelBuilder.Entity("CementSaleManagement.Entities.PurchaseMaster", b =>
@@ -203,6 +212,9 @@ namespace CementSaleManagement.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("CompanyName")
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
@@ -212,12 +224,12 @@ namespace CementSaleManagement.Migrations
                     b.Property<DateTime>("PurchaseDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("SupplierMasterId")
+                    b.Property<int>("UserMasterId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SupplierMasterId");
+                    b.HasIndex("UserMasterId");
 
                     b.ToTable("PurchaseMasters");
                 });
@@ -304,6 +316,9 @@ namespace CementSaleManagement.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Password")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Phone")
                         .HasColumnType("TEXT");
 
@@ -382,17 +397,6 @@ namespace CementSaleManagement.Migrations
                     b.Navigation("UserMaster");
                 });
 
-            modelBuilder.Entity("CementSaleManagement.Entities.OrderCancellationMaster", b =>
-                {
-                    b.HasOne("CementSaleManagement.Entities.OrderMaster", "OrderMaster")
-                        .WithMany()
-                        .HasForeignKey("OrderMasterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("OrderMaster");
-                });
-
             modelBuilder.Entity("CementSaleManagement.Entities.OrderDetail", b =>
                 {
                     b.HasOne("CementSaleManagement.Entities.OrderMaster", "OrderMaster")
@@ -414,27 +418,16 @@ namespace CementSaleManagement.Migrations
 
             modelBuilder.Entity("CementSaleManagement.Entities.OrderMaster", b =>
                 {
-                    b.HasOne("CementSaleManagement.Entities.CustomerMaster", "CustomerMaster")
+                    b.HasOne("CementSaleManagement.Entities.UserMaster", "UserMaster")
                         .WithMany()
-                        .HasForeignKey("CustomerMasterId")
+                        .HasForeignKey("UserMasterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CustomerMaster");
+                    b.Navigation("UserMaster");
                 });
 
-            modelBuilder.Entity("CementSaleManagement.Entities.ProductMaster", b =>
-                {
-                    b.HasOne("CementSaleManagement.Entities.SupplierMaster", "SupplierMaster")
-                        .WithMany()
-                        .HasForeignKey("SupplierMasterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SupplierMaster");
-                });
-
-            modelBuilder.Entity("CementSaleManagement.Entities.PruchaseDetail", b =>
+            modelBuilder.Entity("CementSaleManagement.Entities.PurchaseDetail", b =>
                 {
                     b.HasOne("CementSaleManagement.Entities.ProductMaster", "ProductMaster")
                         .WithMany()
@@ -453,26 +446,15 @@ namespace CementSaleManagement.Migrations
                     b.Navigation("PurchaseMaster");
                 });
 
-            modelBuilder.Entity("CementSaleManagement.Entities.PurchaseCancellationMaster", b =>
-                {
-                    b.HasOne("CementSaleManagement.Entities.PurchaseMaster", "PurchaseMaster")
-                        .WithMany()
-                        .HasForeignKey("PurchaseMasterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PurchaseMaster");
-                });
-
             modelBuilder.Entity("CementSaleManagement.Entities.PurchaseMaster", b =>
                 {
-                    b.HasOne("CementSaleManagement.Entities.SupplierMaster", "SupplierMaster")
+                    b.HasOne("CementSaleManagement.Entities.UserMaster", "UserMaster")
                         .WithMany()
-                        .HasForeignKey("SupplierMasterId")
+                        .HasForeignKey("UserMasterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("SupplierMaster");
+                    b.Navigation("UserMaster");
                 });
 
             modelBuilder.Entity("CementSaleManagement.Entities.SupplierMaster", b =>

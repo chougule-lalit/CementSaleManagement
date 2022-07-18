@@ -24,6 +24,22 @@ namespace CementSaleManagement
 
             CreateMap<Enquiry, EnquiryDto>()
                 .ReverseMap();
+
+            CreateMap<OrderMaster, OrderMasterDto>()
+                .ForMember(dest => dest.OrderDetails, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<OrderDetail, OrderDetailDto>()
+                .ReverseMap();
+
+            CreateMap<CustomerMaster, CustomerMasterDto>()
+                .ReverseMap();
+
+            CreateMap<SupplierMaster, SupplierMasterDto>()
+                .ReverseMap();
+
+            CreateMap<ProductMaster, ProductMasterDto>()
+                .ReverseMap();
         }
     }
 }

@@ -5,10 +5,14 @@ using System.Threading.Tasks;
 
 namespace CementSaleManagement.Contract.Dto
 {
-    public class PurchaseCancellationMasterDto
+    public class PurchaseDetailDto : EntityDto
     {
-        public DateTime CancelDate { get; set; }
-
         public int PurchaseMasterId { get; set; }
+
+        public int ProductMasterId { get; set; }
+
+        public int Count { get; set; }
+
+        public decimal Amount { get; set; }
     }
 }
