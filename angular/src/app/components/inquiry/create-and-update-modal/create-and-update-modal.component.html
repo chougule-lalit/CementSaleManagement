@@ -1,0 +1,62 @@
+<h1 mat-dialog-title>{{mode}} Inquiry</h1>
+<div mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <mat-form-field appearance="fill">
+          <mat-label>First Name</mat-label>
+          <input type="text" matInput formControlName="firstName">
+        </mat-form-field>
+        <mat-error *ngIf="isSubmitted && f.firstName.errors && f.firstName.errors.required">
+          First Name is <strong>required</strong>
+        </mat-error>
+      </div>
+      <div class="col-sm-6">
+        <mat-form-field appearance="fill">
+          <mat-label>Last Name</mat-label>
+          <input type="text" matInput formControlName="lastName">
+        </mat-form-field>
+        <mat-error *ngIf="isSubmitted && f.lastName.errors && f.lastName.errors.required">
+          Last Name is <strong>required</strong>
+        </mat-error>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 mb-2">
+        <mat-form-field class="w-100" appearance="fill">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput formControlName="email">
+        </mat-form-field>
+        <mat-error *ngIf="isSubmitted && f.email.errors && f.email.errors.pattern">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="isSubmitted && f.email.errors && f.email.errors.required">
+          Email is <strong>required</strong>
+        </mat-error>
+      </div>
+      <div class="col-sm-12 mb-2">
+        <mat-form-field class="w-100" appearance="fill">
+          <mat-label>Phone</mat-label>
+          <input type="text" matInput formControlName="phone">
+        </mat-form-field>
+        <mat-error *ngIf="isSubmitted && f.phone.errors && f.phone.errors.pattern">
+          Please enter a valid phone number
+        </mat-error>
+        <mat-error *ngIf="isSubmitted && f.phone.errors && f.phone.errors.required">
+          phone is <strong>required</strong>
+        </mat-error>
+      </div>
+    </div>
+
+    <mat-form-field class="w-100" appearance="fill">
+      <mat-label>Remark</mat-label>
+      <textarea matInput formControlName="remark"></textarea>
+    </mat-form-field>
+    <hr class="my-0">
+    <mat-card-actions align="end">
+      <button mat-button mat-dialog-close>Close</button>
+      <button type="submit" mat-button mat-raised-button color="primary">Submit</button>
+    </mat-card-actions>
+  </form>
+</div>

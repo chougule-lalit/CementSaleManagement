@@ -1,0 +1,128 @@
+<div *ngIf="loginOrRegister">
+  <div class="login-container">
+    <div class="login-content">
+      <mat-card>
+        <h2 class="font-weight-bold text-center">Login</h2>
+        <h5 class="font-weight-normal text-center">Cement Sale Management System</h5>
+        <hr>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert" *ngIf="loginError.status">
+          {{loginError.message}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <form [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit()">
+
+          <mat-form-field class="w-100" appearance="standard">
+            <mat-label>Email</mat-label>
+            <input type="text" formControlName="email" matInput>
+            <mat-icon matSuffix>person_outline</mat-icon>
+          </mat-form-field>
+          <mat-error *ngIf="isLoginFormSubmitted && loginFormControls.email.errors && loginFormControls.email.errors.required">
+            Email is required
+          </mat-error>
+
+          <mat-form-field class="w-100" appearance="standard">
+            <mat-label>Password</mat-label>
+            <input type="password" formControlName="password" matInput>
+            <mat-icon matSuffix>lock_outline</mat-icon>
+          </mat-form-field>
+          <mat-error *ngIf="isLoginFormSubmitted && loginFormControls.password.errors && loginFormControls.password.errors.required">
+            Password is required
+          </mat-error>
+          <div class="d-flex align-items-center justify-content-center mt-3">
+            <button type="submit" mat-raised-button color="primary">Login</button>
+            <button type="button" mat-raised-button (click)="toggleForm()" class="ms-2">Register</button>
+          </div>
+        </form>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<div class="login-container" *ngIf="!loginOrRegister">
+  <div class="login-content">
+    <mat-card>
+      <h2 class="font-weight-bold text-center mb-0">Register</h2>
+      <h5 class="font-weight-normal text-center">Cement Sale Management System</h5>
+      <hr>
+      <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit()">
+
+        <div class="row">
+          <div class="col-sm-6">
+
+            <mat-form-field class="w-100" appearance="standard">
+              <mat-label>First name</mat-label>
+              <input matInput formControlName="firstName">
+            </mat-form-field>
+            <mat-error *ngIf="isRegisterFormSubmitted && registerFormControls.firstName.errors && registerFormControls.firstName.errors.required">
+              First name is required
+            </mat-error>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field class="w-100" appearance="standard">
+              <mat-label>Last name</mat-label>
+              <input matInput formControlName="lastName">
+            </mat-form-field>
+            <mat-error *ngIf="isRegisterFormSubmitted && registerFormControls.lastName.errors && registerFormControls.lastName.errors.required">
+              Last name is required
+            </mat-error>
+          </div>
+        </div>
+
+
+        <mat-form-field class="w-100" appearance="standard">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email">
+        </mat-form-field>
+        <mat-error *ngIf="isRegisterFormSubmitted && registerFormControls.email.errors && registerFormControls.email.errors.required">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="isRegisterFormSubmitted && registerFormControls.email.errors && registerFormControls.email.errors.pattern">
+          Please enter a valid email address
+        </mat-error>
+
+        <mat-form-field class=" w-100" appearance="standard">
+          <mat-label>Phone</mat-label>
+          <input matInput formControlName="phone">
+        </mat-form-field>
+        <mat-error *ngIf="isRegisterFormSubmitted && registerFormControls.phone.errors && registerFormControls.phone.errors.required">
+          Phone is required
+        </mat-error>
+        <mat-error *ngIf="isRegisterFormSubmitted && registerFormControls.phone.errors && registerFormControls.phone.errors.pattern">
+          Enter 10 Digit Phone Number
+        </mat-error>
+
+        <mat-form-field class="w-100" appearance="standard">
+          <mat-label>Role</mat-label>
+          <mat-select matInput [(value)]="roleId">
+            <mat-option *ngFor="let role of roleHolder;" [value]="role.id">{{role.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="w-100" appearance="standard">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password">
+        </mat-form-field>
+        <mat-error *ngIf="isRegisterFormSubmitted && registerFormControls.password.errors && registerFormControls.password.errors.required">
+          Password is required
+        </mat-error>
+
+        <mat-form-field class="w-100" appearance="standard">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput type="password" formControlName="conf_password">
+        </mat-form-field>
+        <mat-error *ngIf="isRegisterFormSubmitted && registerFormControls.conf_password.errors && registerFormControls.conf_password.errors.required">
+          Confirm Password is required
+        </mat-error>
+        <mat-error *ngIf="isRegisterFormSubmitted && registerFormControls.conf_password.errors && registerFormControls.conf_password.errors.mustMatch">
+          Confirm Password & Password do not match
+        </mat-error>
+
+        <hr class="mt-0">
+        <div class="d-flex align-items-center justify-content-center">
+          <button type="submit" mat-raised-button color="primary">Register</button>
+          <button type="button" mat-raised-button (click)="toggleForm()" class="ms-2">Login</button>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+</div>

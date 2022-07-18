@@ -1,0 +1,58 @@
+<div style="min-width: 50rem">
+  <div class="d-flex align-items-center justify-content-between">
+    <h1 mat-dialog-title class="w-100">{{mode}} Purchase</h1>
+    <button mat-button mat-raised-button color="primary" (click)="createPurchase()" class="pe-4 ps-2">
+      <mat-icon>add</mat-icon>
+      Add Purchase
+    </button>
+  </div>
+  <div mat-dialog-content  >
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <table class="table table-striped table-sm w-100">
+        <thead>
+        <tr>
+          <!--<td>Order</td>-->
+          <td>Product</td>
+          <td>Count</td>
+          <td>Amount</td>
+          <td>Action</td>
+        </tr>
+        </thead>
+        <tbody id="shipment_container" formArrayName="purchaseDetails">
+        <tr *ngFor="let items of purchaseDetailsControlArray.controls; let i = index" [formGroupName]="i">
+          <!--<td>
+            <input type="text" formControlName="purchaseMasterId" class="form-control-sm form-control">
+          </td>-->
+          <td>
+            <select formControlName="productMasterId" (change)="updateAmt($event, i)" class="form-control-sm form-control">
+              <option value="">Select Product</option>
+              <option *ngFor="let product of productDDHolder" [value]="product.id">{{product.name}}</option>
+            </select>
+          </td>
+          <td>
+            <input type="text" formControlName="count" class="form-control-sm form-control">
+          </td>
+          <td>
+            <input type="text" formControlName="amount" class="form-control-sm form-control">
+          </td>
+          <td>
+            <button mat-icon-button color="accent" (click)="removePurchase(i)">
+              <mat-icon aria-label="Delete">delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="purchaseDetailsControlArray.controls.length === 0">
+          <td colspan="4">
+            <h6 class="text-danger text-center m-0 bg-white py-3">Please Add Purchase</h6>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <hr class="my-0">
+      <mat-card-actions align="end">
+        <button mat-button mat-dialog-close>Close</button>
+        <button type="submit" mat-button mat-raised-button color="primary">Submit</button>
+      </mat-card-actions>
+    </form>
+  </div>
+</div>
