@@ -10,7 +10,7 @@ namespace CementSaleManagement.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class OrderController : IOrderAppService
+    public class OrderController : Controller, IOrderAppService
     {
         private readonly IOrderAppService _orderAppService;
 
@@ -59,6 +59,34 @@ namespace CementSaleManagement.Controllers
         public virtual Task<OrderMasterDto> GetAsync(int id)
         {
             return _orderAppService.GetAsync(id);
+        }
+
+        [NonAction]
+        public Task<ExportToExcelDto> DownloadReportAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpGet]
+        [Route("getPurchaseReport")]
+        public async Task<IActionResult> GetPurchaseReportAsync()
+        {
+            var fileDto = await _orderAppService.DownloadReportAsync();
+            return File(fileDto.Content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileDto.Name);
+        }
+
+        [NonAction]
+        public Task<ExportToExcelDto> DownloadCancelReportAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpGet]
+        [Route("getPurchaseCancelReport")]
+        public async Task<IActionResult> GetPurchaseCancelReportAsync()
+        {
+            var fileDto = await _orderAppService.DownloadCancelReportAsync();
+            return File(fileDto.Content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileDto.Name);
         }
     }
 }

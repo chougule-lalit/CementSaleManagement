@@ -9,6 +9,8 @@ namespace CementSaleManagement.Entities
     {
         public DateTime PurchaseDate { get; set; }
 
+        public DateTime CancelDate { get; set; }
+
         public int ItemCount { get; set; }
 
         public decimal Amount { get; set; }

@@ -108,6 +108,7 @@ namespace CementSaleManagement.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     OrderDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CancelDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     ItemCount = table.Column<int>(type: "INTEGER", nullable: false),
                     Amount = table.Column<decimal>(type: "TEXT", nullable: false),
                     UserMasterId = table.Column<int>(type: "INTEGER", nullable: false),
@@ -131,11 +132,11 @@ namespace CementSaleManagement.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     PurchaseDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CancelDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     ItemCount = table.Column<int>(type: "INTEGER", nullable: false),
                     Amount = table.Column<decimal>(type: "TEXT", nullable: false),
                     UserMasterId = table.Column<int>(type: "INTEGER", nullable: false),
-                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
-                    CompanyName = table.Column<string>(type: "TEXT", nullable: true)
+                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

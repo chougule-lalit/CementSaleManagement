@@ -40,6 +40,12 @@ namespace CementSaleManagement
 
             CreateMap<ProductMaster, ProductMasterDto>()
                 .ReverseMap();
+
+            CreateMap<PurchaseMaster, PurchaseMasterDto>()
+                .ReverseMap();
+
+            CreateMap<PurchaseDetail, PurchaseDetailDto>()
+                .ReverseMap();
         }
     }
 }

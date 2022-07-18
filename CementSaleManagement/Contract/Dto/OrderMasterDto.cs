@@ -9,6 +9,8 @@ namespace CementSaleManagement.Contract.Dto
     {
         public DateTime OrderDate { get; set; }
 
+        public DateTime CancelDate { get; set; }
+
         public int ItemCount { get; set; }
 
         public decimal Amount { get; set; }
@@ -30,6 +32,8 @@ namespace CementSaleManagement.Contract.Dto
         public int OrderId { get; set; }
 
         public DateTime OrderDate { get; set; }
+
+        public DateTime CancelDate { get; set; }
 
         public int ItemCount { get; set; }
 

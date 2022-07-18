@@ -112,6 +112,9 @@ namespace CementSaleManagement.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("CancelDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
@@ -210,7 +213,7 @@ namespace CementSaleManagement.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("CompanyName")
+                    b.Property<DateTime>("CancelDate")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsActive")

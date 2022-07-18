@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CementSaleManagement.Migrations
 {
     [DbContext(typeof(CementSaleManagementDbContext))]
-    [Migration("20220718150324_Initial")]
+    [Migration("20220718160829_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -114,6 +114,9 @@ namespace CementSaleManagement.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("CancelDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
@@ -212,7 +215,7 @@ namespace CementSaleManagement.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("CompanyName")
+                    b.Property<DateTime>("CancelDate")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsActive")

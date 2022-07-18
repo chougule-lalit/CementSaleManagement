@@ -3,9 +3,11 @@ using CementSaleManagement.Contract;
 using CementSaleManagement.Contract.Dto;
 using CementSaleManagement.Data;
 using CementSaleManagement.Entities;
+using ClosedXML.Excel;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,6 +36,7 @@ namespace CementSaleManagement.Application
                 if (order != null)
                 {
                     order.IsActive = false;
+                    order.CancelDate = DateTime.Now;
                     await _dbContext.SaveChangesAsync();
                 }
 
@@ -167,7 +170,8 @@ namespace CementSaleManagement.Application
                            IsActive = o.IsActive,
                            ItemCount = o.ItemCount,
                            PurchaseDate = o.PurchaseDate,
-                           PurchaseId = o.Id
+                           PurchaseId = o.Id,
+                           CancelDate = o.CancelDate
                        };
 
             if (input.PurchaseDate.HasValue)
@@ -200,7 +204,8 @@ namespace CementSaleManagement.Application
                            IsActive = o.IsActive,
                            ItemCount = o.ItemCount,
                            PurchaseDate = o.PurchaseDate,
-                           PurchaseId = o.Id
+                           PurchaseId = o.Id,
+                           CancelDate = o.CancelDate
                        };
 
             if (input.PurchaseDate.HasValue)
@@ -238,6 +243,122 @@ namespace CementSaleManagement.Application
 
             var output = _mapper.Map<PurchaseMasterDto>(data);
             output.PurchaseDetails = mappedDetails;
+
+            return output;
+        }
+
+        public virtual async Task<ExportToExcelDto> DownloadReportAsync()
+        {
+            var output = new ExportToExcelDto();
+            var data = await (from o in _dbContext.PurchaseMasters
+                              join c in _dbContext.UserMasters on o.UserMasterId equals c.Id
+                              where o.IsActive
+                              select new PurchaseDto
+                              {
+                                  Amount = o.Amount,
+                                  SupplierName = $"{c.FirstName} {c.LastName}",
+                                  IsActive = o.IsActive,
+                                  ItemCount = o.ItemCount,
+                                  PurchaseDate = o.PurchaseDate,
+                                  PurchaseId = o.Id
+                              }).ToListAsync();
+
+            var currentRow = 0;
+
+            using (var workbook = new XLWorkbook())
+            {
+
+                var worksheet = workbook.Worksheets.Add("Purchase");
+
+                currentRow += 2;
+                worksheet.Cell(currentRow, 1).Value = "Purchase Id";
+                worksheet.Cell(currentRow, 2).Value = "Supplier Name";
+                worksheet.Cell(currentRow, 3).Value = "Item Count";
+                worksheet.Cell(currentRow, 4).Value = "Total Price";
+                worksheet.Cell(currentRow, 5).Value = "Purchase Date";
+
+                worksheet.Range(currentRow, 1, currentRow, 5).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                worksheet.Range(currentRow, 1, currentRow, 5).Style.Border.OutsideBorderColor = XLColor.Black;
+                worksheet.Range(currentRow, 1, currentRow, 5).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                worksheet.Range(currentRow, 1, currentRow, 5).Style.Border.InsideBorderColor = XLColor.Black;
+
+                foreach (var item in data)
+                {
+                    currentRow++;
+                    worksheet.Cell(currentRow, 1).SetValue(item.PurchaseId);
+                    worksheet.Cell(currentRow, 2).SetValue(item.SupplierName);
+                    worksheet.Cell(currentRow, 3).SetValue(item.ItemCount);
+                    worksheet.Cell(currentRow, 4).SetValue(item.Amount);
+                    worksheet.Cell(currentRow, 4).Style.NumberFormat.SetFormat("#,##0.00");
+                    worksheet.Cell(currentRow, 5).SetValue(item.PurchaseDate.ToShortDateString());
+                }
+
+
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    output.Name = $"Purchase_Report.xlsx";
+                    output.Content = stream.ToArray();
+                }
+            }
+
+            return output;
+        }
+
+        public virtual async Task<ExportToExcelDto> DownloadCancelReportAsync()
+        {
+            var output = new ExportToExcelDto();
+            var data = await (from o in _dbContext.PurchaseMasters
+                              join c in _dbContext.UserMasters on o.UserMasterId equals c.Id
+                              where !o.IsActive
+                              select new PurchaseDto
+                              {
+                                  Amount = o.Amount,
+                                  SupplierName = $"{c.FirstName} {c.LastName}",
+                                  IsActive = o.IsActive,
+                                  ItemCount = o.ItemCount,
+                                  CancelDate = o.PurchaseDate,
+                                  PurchaseId = o.Id
+                              }).ToListAsync();
+
+            var currentRow = 0;
+
+            using (var workbook = new XLWorkbook())
+            {
+
+                var worksheet = workbook.Worksheets.Add("Purchase");
+
+                currentRow += 2;
+                worksheet.Cell(currentRow, 1).Value = "Purchase Id";
+                worksheet.Cell(currentRow, 2).Value = "Supplier Name";
+                worksheet.Cell(currentRow, 3).Value = "Item Count";
+                worksheet.Cell(currentRow, 4).Value = "Total Price";
+                worksheet.Cell(currentRow, 5).Value = "Cancel Date";
+
+                worksheet.Range(currentRow, 1, currentRow, 5).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                worksheet.Range(currentRow, 1, currentRow, 5).Style.Border.OutsideBorderColor = XLColor.Black;
+                worksheet.Range(currentRow, 1, currentRow, 5).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                worksheet.Range(currentRow, 1, currentRow, 5).Style.Border.InsideBorderColor = XLColor.Black;
+
+                foreach (var item in data)
+                {
+                    currentRow++;
+                    worksheet.Cell(currentRow, 1).SetValue(item.PurchaseId);
+                    worksheet.Cell(currentRow, 2).SetValue(item.SupplierName);
+                    worksheet.Cell(currentRow, 3).SetValue(item.ItemCount);
+                    worksheet.Cell(currentRow, 4).SetValue(item.Amount);
+                    worksheet.Cell(currentRow, 4).Style.NumberFormat.SetFormat("#,##0.00");
+                    worksheet.Cell(currentRow, 5).SetValue(item.CancelDate.ToShortDateString());
+                }
+
+
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    output.Name = $"Purchase_Cancel_Report.xlsx";
+                    output.Content = stream.ToArray();
+                }
+            }
 
             return output;
         }

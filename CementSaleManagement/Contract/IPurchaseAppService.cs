@@ -14,5 +14,7 @@ namespace CementSaleManagement.Contract
         Task<PagedResultDto<PurchaseDto>> FetchPurchaseListAsync(GetPurchaseInputDto input);
         Task<PagedResultDto<PurchaseDto>> FetchCancelledPurchaseListAsync(GetPurchaseInputDto input);
         Task<bool> CancelPurchase(int id);
+        Task<ExportToExcelDto> DownloadReportAsync();
+        Task<ExportToExcelDto> DownloadCancelReportAsync();
     }
 }
