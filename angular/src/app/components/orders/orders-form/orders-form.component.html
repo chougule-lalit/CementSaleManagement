@@ -1,13 +1,13 @@
 <div style="min-width: 50rem">
   <div class="d-flex align-items-center justify-content-between">
     <h1 mat-dialog-title class="w-100">{{mode}} Orders</h1>
-    <button mat-button mat-raised-button color="primary" (click)="createOrders()" class="pe-4 ps-2">
+    <button mat-button mat-raised-button color="primary" (click)="addOrders()" class="pe-4 ps-2">
       <mat-icon>add</mat-icon>
       Add Order
     </button>
   </div>
   <div mat-dialog-content  >
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form  (ngSubmit)="onSubmit()">
       <table class="table table-striped table-sm w-100">
         <thead>
         <tr>
@@ -18,8 +18,8 @@
           <td>Action</td>
         </tr>
         </thead>
-        <tbody id="shipment_container" formArrayName="orderDetails">
-        <tr *ngFor="let items of orderDetailsControlArray.controls; let i = index" [formGroupName]="i">
+        <tbody>
+        <tr *ngFor="let items of ordersHolder.orderDetails; let i = index">
           <!--<td>
             <input type="text" formControlName="orderMasterId" class="form-control-sm form-control">
           </td>-->
@@ -30,10 +30,10 @@
             </select>
           </td>
           <td>
-            <input type="text" formControlName="count" class="form-control-sm form-control">
+            <input type="text" [(ngModel)]="items.count" class="form-control-sm form-control">
           </td>
           <td>
-            <input type="text" formControlName="amount" class="form-control-sm form-control">
+            <input type="text" [(ngModel)]="items.amount" class="form-control-sm form-control">
           </td>
           <td>
             <button mat-icon-button color="accent" (click)="removeOrders(i)">
@@ -41,8 +41,8 @@
             </button>
           </td>
         </tr>
-        <tr *ngIf="orderDetailsControlArray.controls.length === 0">
-          <td colspan="4">
+        <tr *ngIf="ordersHolder && ordersHolder.orderDetails && ordersHolder.orderDetails.length === 0">
+          <td colspan="100%">
             <h6 class="text-danger text-center m-0 bg-white py-3">Please Add Orders</h6>
           </td>
         </tr>
