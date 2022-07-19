@@ -13,6 +13,8 @@ import {HomeComponent} from "./components/home/home.component";
 import {UsersComponent} from "./components/users-and-roles/users.component";
 import {LoginComponent} from "./components/login/login.component";
 import {AboutComponent} from "./components/about/about.component";
+import {CancelledOrdersListComponent} from "./components/orders/cancelled-orders-list/cancelled-orders-list.component";
+import {CancelledPurchaseListComponent} from "./components/purchase/cancelled-purchase-list/cancelled-purchase-list.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -27,6 +29,8 @@ const routes: Routes = [
   {path: 'supplier', component: SupplierComponent, canActivate: [AuthGuard, RoleGuard], data: {expectedRoles: 1}},
   {path: 'workers', component: WorkersComponent, canActivate: [AuthGuard, RoleGuard], data: {expectedRoles: 1}},
   {path: 'roles', component: RoleComponent, canActivate: [AuthGuard, RoleGuard], data: {expectedRoles: 1}},
+  {path: 'cancelled-orders', component: CancelledOrdersListComponent, canActivate: [AuthGuard, RoleGuard], data: {expectedRoles: 1}},
+  {path: 'cancelled-purchase', component: CancelledPurchaseListComponent, canActivate: [AuthGuard, RoleGuard], data: {expectedRoles: 1}},
   {path: '**', redirectTo: 'dashboard'},
 ];
 

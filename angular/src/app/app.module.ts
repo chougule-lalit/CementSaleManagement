@@ -34,6 +34,9 @@ import {CreateAndUpdateUserComponent} from "./components/users-and-roles/create-
 import {CreateAndUpdateModalComponent} from "./components/inquiry/create-and-update-modal/create-and-update-modal.component";
 import {PurchaseComponent} from "./components/purchase/purchase.component";
 import {PurchaseFormComponent} from "./components/purchase/purchase-form/purchase-form.component";
+import { CancelledOrdersListComponent } from './components/orders/cancelled-orders-list/cancelled-orders-list.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { CancelledPurchaseListComponent } from './components/purchase/cancelled-purchase-list/cancelled-purchase-list.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +59,9 @@ import {PurchaseFormComponent} from "./components/purchase/purchase-form/purchas
     WorkersFormComponent,
     WorkersComponent,
     PurchaseComponent,
-    PurchaseFormComponent
+    PurchaseFormComponent,
+    CancelledOrdersListComponent,
+    CancelledPurchaseListComponent
   ],
   imports: [
     BrowserModule,
@@ -74,6 +79,7 @@ import {PurchaseFormComponent} from "./components/purchase/purchase-form/purchas
     MatFormFieldModule,
     MatSelectModule,
     MatPaginatorModule,
+    MatSnackBarModule,
   ],
   providers: [{provide: DEFAULT_CURRENCY_CODE, useValue: 'INR' }],
   bootstrap: [AppComponent],

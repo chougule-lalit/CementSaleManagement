@@ -3,22 +3,32 @@
     <mat-card-title>
       <div class="d-flex align-items-center justify-content-between">
         <span>Purchase List</span>
-        <button mat-button mat-raised-button color="primary" (click)="add()">
-          <mat-icon>add</mat-icon>
-          Add Purchase
-        </button>
+        <div>
+          <button mat-button mat-raised-button color="primary" (click)="add()">
+            <mat-icon>add</mat-icon>
+            Add Purchase
+          </button>
+          <button mat-button mat-raised-button class="ms-2" routerLink="/cancelled-purchase">
+            Cancelled Purchase
+          </button>
+          <button mat-button mat-raised-button class="ms-2" (click)="getPurchaseReport()">
+            Download Purchase Report
+          </button>
+          <button mat-button mat-raised-button class="ms-2" (click)="getCancelledPurchaseReport()">
+            Download Cancelled Purchase Report
+          </button>
+        </div>
       </div>
     </mat-card-title>
-
     <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ row.orderId }}</mat-cell>
+        <mat-cell *matCellDef="let row">{{ row.purchaseId }}</mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="customerName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Customer Name</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{ row.customerName }}</mat-cell>
+      <ng-container matColumnDef="supplierName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Supplier Name</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.supplierName }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="amount">
@@ -32,8 +42,12 @@
       </ng-container>
 
       <ng-container matColumnDef="orderDate">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Order Date</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{ row.orderDate | date }}</mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Purchase Date</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.purchaseDate | date }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="cancelDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Cancel Date</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.cancelDate | date }}</mat-cell>
       </ng-container>
 
 
@@ -42,14 +56,14 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
 
         <mat-cell *matCellDef="let row; let i = index">
-          <button  mat-flat-button color="primary" (click)="cancelOrder(row.id)" class="me-2 ms-0 ps-2">
+          <button  mat-flat-button color="primary" (click)="cancelPurchase(row.purchaseId)" class="me-2 ms-0 ps-2">
             Cancel
           </button>
           <button mat-icon-button color="accent" (click)="edit(row)">
             <mat-icon aria-label="Edit">edit</mat-icon>
           </button>
 
-          <button mat-icon-button color="accent" (click)="delete(row.id)">
+          <button mat-icon-button color="accent" (click)="delete(row.purchaseId)">
             <mat-icon aria-label="Delete">delete</mat-icon>
           </button>
 

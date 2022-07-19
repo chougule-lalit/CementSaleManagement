@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {environment} from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -31,12 +31,17 @@ export class CommonService {
   deleteRequestWithId(apiUrlEndPoint: string, id: any): Observable<any> {
     return this.http.delete(this.apiUrl + '/' + apiUrlEndPoint + '/' + id);
   }
+
   deleteRequestWithParams(apiUrlEndPoint: string, id: any): Observable<any> {
-    return this.http.delete(this.apiUrl + '/' + apiUrlEndPoint, { params: { id: id } });
+    return this.http.delete(this.apiUrl + '/' + apiUrlEndPoint, {params: {id: id}});
   }
 
   getRequest(apiUrlEndPoint: string): Observable<any> {
     return this.http.get(this.apiUrl + '/' + apiUrlEndPoint);
+  }
+
+  getFile(apiUrlEndPoint: string): Observable<any> {
+    return this.http.get(this.apiUrl + '/' + apiUrlEndPoint, {responseType: 'blob' as 'json'});
   }
 
   getRequestWithId(apiUrlEndPoint: string, id: number): Observable<any> {

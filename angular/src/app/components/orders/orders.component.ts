@@ -5,6 +5,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatDialog} from '@angular/material/dialog';
 import {OrdersFormComponent} from './orders-form/orders-form.component';
 import {CommonService} from "../../shared/services/common.service";
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-orders',
@@ -15,9 +16,11 @@ export class OrdersComponent implements OnInit {
   dataSource: any;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  blob;
 
-  constructor(private commonService: CommonService, private fb: FormBuilder, public dialog: MatDialog) {
+  constructor(private commonService: CommonService, private _snackBar: MatSnackBar, private fb: FormBuilder, public dialog: MatDialog) {
   }
+
 
   ngOnInit(): void {
     this.getOrdersList();
@@ -33,6 +36,28 @@ export class OrdersComponent implements OnInit {
       this.dataSource = result.items;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+    });
+  }
+
+  getOrdersReport() {
+    this.commonService.getFile('Order/getPurchaseReport').subscribe((result) => {
+      this.blob = new Blob([result], {type: 'application/xlsx'});
+      let downloadURL = window.URL.createObjectURL(result);
+      let link = document.createElement('a');
+      link.href = downloadURL;
+      link.download = "orders-report.xlsx";
+      link.click();
+    });
+  }
+
+  getOrdersCancelledReport() {
+    this.commonService.getFile('Order/getPurchaseCancelReport').subscribe((result) => {
+      this.blob = new Blob([result], {type: 'application/xlsx'});
+      let downloadURL = window.URL.createObjectURL(result);
+      let link = document.createElement('a');
+      link.href = downloadURL;
+      link.download = "cancelled-orders-report.xlsx";
+      link.click();
     });
   }
 
@@ -67,9 +92,18 @@ export class OrdersComponent implements OnInit {
   }
 
   cancelOrder(id: any): void {
-    this.commonService.postRequest('Order/cancelOrder', {id}).subscribe((data) => {
-      console.log('User Delete Resp : ', data);
-      this.getOrdersList();
+    console.log('id : ', id);
+    this.commonService.postRequest(`Order/cancelOrder?id=${id}`, {}).subscribe((resp) => {
+      console.log('User Delete Resp : ', resp);
+      if (resp) {
+        this.openSnackBar('Order Cancelled Successfully', 'Close');
+        this.getOrdersList();
+      }
     });
   }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
+  }
+
 }
