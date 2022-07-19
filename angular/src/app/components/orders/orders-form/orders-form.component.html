@@ -19,21 +19,20 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let items of ordersHolder.orderDetails; let i = index">
+        <tr *ngFor="let item of orderDetailsHolder; trackBy: trackBy; let i = index">
           <!--<td>
             <input type="text" formControlName="orderMasterId" class="form-control-sm form-control">
           </td>-->
           <td>
-            <select formControlName="productMasterId" (change)="updateAmt($event, i)" class="form-control-sm form-control">
-              <option value="">Select Product</option>
+            <select [(ngModel)]="item.productMasterId" (change)="updateAmt($event, i)" name="productMasterId" class="form-control-sm form-control">
               <option *ngFor="let product of productDDHolder" [value]="product.id">{{product.name}}</option>
             </select>
           </td>
           <td>
-            <input type="text" [(ngModel)]="items.count" class="form-control-sm form-control">
+            <input type="number" [(ngModel)]="item.count" (input)="updateCount($event, i)" oninput="validity.valid||(value='')" min="1" name="count" class="form-control-sm form-control">
           </td>
           <td>
-            <input type="text" [(ngModel)]="items.amount" class="form-control-sm form-control">
+            <input type="text" [(ngModel)]="item.amount" name="amount" readonly disabled class="form-control-sm form-control">
           </td>
           <td>
             <button mat-icon-button color="accent" (click)="removeOrders(i)">
@@ -47,6 +46,12 @@
           </td>
         </tr>
         </tbody>
+        <tfoot>
+        <tr>
+          <th colspan="3" class="text-end">Total Amount : </th>
+          <th>{{totalAmount}}</th>
+        </tr>
+        </tfoot>
       </table>
       <hr class="my-0">
       <mat-card-actions align="end">

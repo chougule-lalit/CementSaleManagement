@@ -16,8 +16,8 @@ export class OrdersFormComponent implements OnInit {
   productDDHolder: any[] = [];
   selectedSupplierId!: number;
   ordersHolder!: any;
-  orderDetailsHolder: OrdersDetails[] = [];
-
+  orderDetailsHolder: any[] = [];
+  totalAmount = 0;
   constructor(
     public dialogRef: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -85,15 +85,15 @@ export class OrdersFormComponent implements OnInit {
   //   return this.form.controls;
   // }
 
-  addOrders(){
-    // console.log('Clicked Add Orders');
-    // let obj = new OrdersDetails();
-    // obj.id = null;
-    // obj.amount = null;
-    // obj.count = null;
-    // obj.productMasterId = null;
-    // console.log('obj : ', this.orderDetailsHolder);
-    // this.orderDetailsHolder.push(obj)
+  addOrders() {
+    let orderDetails = {
+      id: null,
+      amount: null,
+      count: null,
+      productMasterId: null,
+    };
+    this.orderDetailsHolder.push(orderDetails);
+    console.log('Orders Details Holder : ', this.orderDetailsHolder);
   }
 
   getProduct() {
@@ -104,18 +104,42 @@ export class OrdersFormComponent implements OnInit {
   }
 
   updateAmt(event: any, i: number) {
-    // let id = event.target.value;
-    // console.log('id : ', id);
-    // this.productDDHolder.filter((item) => {
-    //   if (+item.id === +id) {
-    //     console.log('Product Price : ', this.orderDetailsControlArray.controls[i].value.amount);
-    //   }
-    // })
+    let id = event.target.value;
+    console.log('id : ', id);
+    this.orderDetailsHolder[i].count = 1;
+    this.productDDHolder.filter((item) => {
+      if (+item.id === +id) {
+        this.orderDetailsHolder[i].amount = item.price;
+        this.totalAmt();
+      }
+    })
+  }
+
+  updateCount(event: any, i: number) {
+    let count = +event.target.value;
+    if(count > 0){
+      this.productDDHolder.filter((item) => {
+        if (+item.id === +this.orderDetailsHolder[i].productMasterId) {
+          this.orderDetailsHolder[i].amount = +item.price * +count;
+          this.totalAmt();
+        }
+      })
+    }else{
+      this.orderDetailsHolder[i].count = 1;
+    }
+  }
+
+  totalAmt(){
+    this.orderDetailsHolder.forEach((item) => {
+      console.log('item amt : ', item.amount);
+      console.log('totalAmount amt : ', this.totalAmount);
+      this.totalAmount = +item.amount + +this.totalAmount;
+    });
   }
 
   onSubmit(): void {
 
-    console.log('ordersHolder : ', this.ordersHolder);
+    console.log('Orders Details Holder : ', this.orderDetailsHolder);
     //   let totalCount = 0;
     //   let totalAmt = 0;
     //   this.form.value.orderDetails.forEach((item: any) => {
@@ -140,9 +164,13 @@ export class OrdersFormComponent implements OnInit {
     //   });
     //
   }
+
+  trackBy(index: number, item: any) {
+    return item.id;
+  }
 }
 
-export class Orders implements IOrders{
+export class Orders implements IOrders {
   id!: number | undefined;
   itemCount!: number | undefined;
   amount!: number | undefined;
@@ -151,7 +179,7 @@ export class Orders implements IOrders{
   orderDetails!: OrdersDetails[] | undefined;
 }
 
-export class OrdersDetails implements IOrdersDetails{
+export class OrdersDetails implements IOrdersDetails {
   id!: number | undefined;
   productMasterId!: number | undefined;
   count!: number | undefined;
