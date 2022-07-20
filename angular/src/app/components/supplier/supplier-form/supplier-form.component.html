@@ -1,0 +1,69 @@
+<h1 mat-dialog-title>{{mode}} Supplier</h1>
+<div mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row mb-2">
+      <div class="col-sm-12">
+        <mat-form-field class="w-100" appearance="fill">
+          <mat-label>Supplier Name</mat-label>
+          <input type="text" matInput formControlName="supplier_Name">
+        </mat-form-field>
+        <mat-error *ngIf="isSubmitted && f.supplier_Name.errors && f.supplier_Name.errors.required">
+          Supplier Name is <strong>required</strong>
+        </mat-error>
+      </div>
+      <div class="col-sm-12">
+        <mat-form-field class="w-100" appearance="fill">
+          <mat-label>Supplier Address</mat-label>
+          <input type="text" matInput formControlName="supplier_Address">
+        </mat-form-field>
+        <mat-error *ngIf="isSubmitted && f.supplier_Address.errors && f.supplier_Address.errors.required">
+          Supplier Address is <strong>required</strong>
+        </mat-error>
+      </div>
+    </div>
+
+    <div class="mb-1">
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>Select Product</mat-label>
+        <mat-select [(value)]="selectedProduct">
+          <mat-option *ngFor="let item of productHolder" [value]="item.productName">{{item.productName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 mb-2">
+        <mat-form-field class="w-100" appearance="fill">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput formControlName="email">
+        </mat-form-field>
+        <mat-error *ngIf="isSubmitted && f.email.errors && f.email.errors.pattern">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="isSubmitted && f.email.errors && f.email.errors.required">
+          Email is <strong>required</strong>
+        </mat-error>
+      </div>
+
+      <div class="col-sm-12 mb-2">
+        <mat-form-field class="w-100" appearance="fill">
+          <mat-label>Phone</mat-label>
+          <input type="text" matInput formControlName="phone">
+        </mat-form-field>
+        <mat-error *ngIf="isSubmitted && f.phone.errors && f.phone.errors.pattern">
+          Please enter a valid phone number
+        </mat-error>
+        <mat-error *ngIf="isSubmitted && f.phone.errors && f.phone.errors.required">
+          phone is <strong>required</strong>
+        </mat-error>
+      </div>
+    </div>
+
+
+    <hr class="my-0">
+    <mat-card-actions align="end">
+      <button type="button" mat-button mat-dialog-close>Close</button>
+      <button type="submit" mat-button mat-raised-button color="primary">Submit</button>
+    </mat-card-actions>
+  </form>
+</div>

@@ -1,1 +1,166 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+section.home-sec {
+  background-color: #ed7b0008;
+  height: 100%;
+  min-height: calc(100vh - 59px);
+}
+
+.mat-form-field-wrapper {
+  padding-bottom: 1.34375em;
+  margin-bottom: .65rem;
+}
+
+.mat-form-field-label-wrapper {
+  top: -0.6em;
+  padding-top: .84375em;
+}
+
+.navbar-first {
+  background-color: #ed7b00;
+}
+
+.navbar-first .nav-link {
+  color: #fff !important;
+  padding: 1.1rem 1rem !important;
+  width: 100%;
+}
+
+.logo-box img {
+  max-height: 100%;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+}
+
+.logo-box:hover {
+  color: #fff;
+}
+
+.logo-box {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  height: 56px;
+  font-size: 21px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #fff;
+}
+
+
+a.nav-link:hover {
+  background-color: #e07500;
+}
+a.nav-link.active {
+  background-color: #e07500;
+}
+
+.mat-form-field-label-wrapper {
+  top: -1em;
+  padding-top: .84375em;
+}
+
+.dropdown-item {
+  font-size: 14px;
+}
+
+.dropdown-menu {
+  margin: 0 !important;
+  border: 0;
+  box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.no-results {
+  text-align: center;
+  padding: 1rem 0;
+  color: #e90909;
+  text-transform: capitalize;
+  font-size: 16px;
+  letter-spacing: 0.025em;
+  border-bottom: 1px solid #ddd;
+}
+
+.mat-h1, .mat-headline, .mat-typography h1 {
+  font: 400 19px/23px Roboto, "Helvetica Neue", sans-serif;
+  margin: 0 0 16px;
+}
+
+.mat-error {
+  margin-top: -1.5rem;
+}
+
+.navbar-light .navbar-toggler {
+  color: rgb(255 255 255);
+  border-color: rgb(255 255 255 / 0%);
+}
+
+.property-details{
+  background-color: #ecf2ff85;
+  height: 100%;
+  min-height: calc(100vh - 56px);
+}
+
+.left-box{
+  position: relative;
+}
+
+.no-photo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background: #fffffff5;
+  width: 85%;
+  margin: 0 !important;
+  display: none;
+}
+
+.img-box img {
+  max-height: 100%;
+  width: auto;
+}
+.img-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 289px;
+}
+
+.mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
+  background-color: #ed7b00 !important;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: rgb(237 123 0 / 9%) !important;
+}
+
+
+.mat-header-cell {
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  color: #ed7b00 !important;
+}
+
+.mat-card-actions .mat-button, .mat-card-actions .mat-raised-button, .mat-card-actions .mat-stroked-button {
+  background-color: #ebebeb;
+}
+
+.mat-button.mat-accent, .mat-icon-button.mat-accent, .mat-stroked-button.mat-accent {
+  color: #fff;
+  background: #ff2020bd;
+  border-radius: 3px !important;
+  margin-right: 8px;
+}
+
+.mat-icon-button {
+  width: 31px !important;
+  height: 31px !important;
+  line-height: 30px !important;
+}
