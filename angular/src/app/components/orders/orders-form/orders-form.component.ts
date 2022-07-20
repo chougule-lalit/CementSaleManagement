@@ -11,7 +11,6 @@ export class OrdersFormComponent implements OnInit {
   mode = 'Create';
   supplierHolder: any[] = [];
   productDDHolder: any[] = [];
-  ordersHolder!: any;
   orderDetailsHolder: any[] = [];
   totalAmount = 0;
 
@@ -37,8 +36,10 @@ export class OrdersFormComponent implements OnInit {
   }
 
 
-  removeOrders(i: number) {
+  removeOrders(i: number, ) {
     this.orderDetailsHolder.splice(i, 1);
+    this.totalAmount = 0;
+    this.totalAmt();
   }
 
   addOrders() {
@@ -84,6 +85,7 @@ export class OrdersFormComponent implements OnInit {
   }
 
   totalAmt() {
+    this.totalAmount = 0;
     this.orderDetailsHolder.forEach((item) => {
       this.totalAmount = +item.amount + +this.totalAmount;
     });

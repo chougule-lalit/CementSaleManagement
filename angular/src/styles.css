@@ -158,3 +158,9 @@ a.nav-link.active {
   border-radius: 3px !important;
   margin-right: 8px;
 }
+
+.mat-icon-button {
+  width: 31px !important;
+  height: 31px !important;
+  line-height: 30px !important;
+}

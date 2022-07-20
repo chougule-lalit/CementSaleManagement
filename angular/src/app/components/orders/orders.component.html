@@ -4,17 +4,17 @@
       <div class="d-flex align-items-center justify-content-between">
         <span>Orders List</span>
         <div>
-          <button mat-button mat-raised-button color="primary" (click)="add()">
+          <button type="button" mat-button mat-raised-button color="primary" (click)="add()">
             <mat-icon>add</mat-icon>
             Add Order
           </button>
-          <button mat-button mat-raised-button class="ms-2" routerLink="/cancelled-orders">
+          <button type="button" mat-button mat-raised-button class="ms-2" routerLink="/cancelled-orders">
             Cancelled Orders
           </button>
-          <button mat-button mat-raised-button class="ms-2" (click)="getOrdersReport()">
+          <button type="button" mat-button mat-raised-button class="ms-2" (click)="getOrdersReport()">
             Download Orders Report
           </button>
-          <button mat-button mat-raised-button class="ms-2" (click)="getOrdersCancelledReport()">
+          <button type="button" mat-button mat-raised-button class="ms-2" (click)="getOrdersCancelledReport()">
             Download Cancelled Orders Report
           </button>
         </div>

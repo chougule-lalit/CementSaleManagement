@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {CommonService} from "../../../shared/services/common.service";
 
@@ -8,13 +8,11 @@ import {CommonService} from "../../../shared/services/common.service";
   templateUrl: './purchase-form.component.html'
 })
 export class PurchaseFormComponent implements OnInit {
-  form!: FormGroup;
   mode = 'Create';
-  isSubmitted = false;
-  selectedProduct!: string;
   supplierHolder: any[] = [];
   productDDHolder: any[] = [];
-  selectedSupplierId!: number;
+  purchaseDetailsHolder: any[] = [];
+  totalAmount = 0;
 
   constructor(
     public dialogRef: MatDialogRef<any>,
@@ -30,102 +28,122 @@ export class PurchaseFormComponent implements OnInit {
     })
   }
 
+// POST
+// Purchase/cancelPurchase
+
+// POST
+// Purchase/createOrUpdate
+
+// DELETE
+// Purchase/delete​/{id}
+
+// POST
+// Purchase/fetchCancelledPurchaseList
+
+// POST
+// Purchase/fetchPurchaseList
+
+// GET
+// Purchase/get​/{id}
+
+// GET
+// Purchase/getPurchaseReport
+
+// GET
+// Purchase/getPurchaseCancelReport
+
+
   ngOnInit(): void {
-    this.form = this.fb.group({
-      id: [null],
-      itemCount: ['', [Validators.required]],
-      amount: ['', [Validators.required]],
-      userMasterId: [JSON.parse(localStorage.getItem('user-details')!).id],
-      isActive: [true,],
-      purchaseDetails: this.fb.array([])
-    });
-
     if (this.data) {
-      console.log('Edit Data : ', this.data);
       this.mode = 'Update';
-      this.form.patchValue({
-        id: this.data.id,
-        itemCount: this.data.itemCount,
-        amount: this.data.amount,
-        userMasterId: this.data.userMasterId,
-        isActive: this.data.isActive,
-        purchaseDetails: this.data.purchaseDetails,
-      });
-
-      console.log('patchValue : ', this.form.value);
-
     }
     this.getProduct();
   }
 
-  get purchaseDetailsControlArray(): FormArray {
-    return this.form.get('purchaseDetails') as FormArray;
-  }
-
-  purchaseDetails(): FormGroup {
-    return this.fb.group({
-      id: [null],
-      productMasterId: ['', [Validators.required]],
-      count: [0, [Validators.required]],
-      amount: [0, [Validators.required]],
-    })
-  }
-
-  createPurchase() {
-    this.purchaseDetailsControlArray.push(this.purchaseDetails());
-  }
 
   removePurchase(i: number) {
-    this.purchaseDetailsControlArray.removeAt(i);
+    this.purchaseDetailsHolder.splice(i, 1);
+    this.totalAmt();
   }
 
-
-  get f(): { [key: string]: AbstractControl } {
-    return this.form.controls;
+  addPurchase() {
+    let purchaseDetails = {
+      id: null,
+      purchaseMasterId: null,
+      amount: null,
+      count: null,
+      productMasterId: null,
+    };
+    this.purchaseDetailsHolder.push(purchaseDetails);
   }
 
   getProduct() {
     this.commonService.getRequest('Product/getProductMasterDropdown').subscribe((result) => {
-      console.log('Get Product : ', result);
       this.productDDHolder = result;
     })
   }
 
-  updateAmt(event: any, i: number){
+  updateAmt(event: any, i: number) {
     let id = event.target.value;
-    console.log('id : ', id);
+    this.purchaseDetailsHolder[i].count = 1;
     this.productDDHolder.filter((item) => {
-      if(+item.id === +id){
-        console.log('Product Price : ', this.purchaseDetailsControlArray.controls[i].value.amount);
+      if (+item.id === +id) {
+        this.purchaseDetailsHolder[i].amount = item.price;
+        this.totalAmt();
       }
     })
   }
 
+  updateCount(event: any, i: number) {
+    let count = +event.target.value;
+    if (count > 0) {
+      this.productDDHolder.filter((item) => {
+        if (+item.id === +this.purchaseDetailsHolder[i].productMasterId) {
+          this.purchaseDetailsHolder[i].amount = +item.price * +count;
+          this.totalAmt();
+        }
+      })
+    } else {
+      this.purchaseDetailsHolder[i].count = 1;
+    }
+  }
+
+  totalAmt() {
+    this.totalAmount = 0;
+    this.purchaseDetailsHolder.forEach((item) => {
+      this.totalAmount = +item.amount + +this.totalAmount;
+    });
+  }
+
   onSubmit(): void {
 
-
-    let totalCount = 0;
-    let totalAmt = 0;
-    this.form.value.purchaseDetails.forEach((item: any) => {
-      totalAmt = (+item.amount * item.count) + totalAmt;
-      totalCount = +item.count + totalCount;
+    let itemCount = 0;
+    this.purchaseDetailsHolder.forEach((item) => {
+      if (item.count > 0) {
+        itemCount = item.count + itemCount;
+      } else {
+        alert('Please Enter Count');
+      }
     });
 
-    this.form.patchValue({
-      itemCount: totalCount,
-      amount: totalAmt
-    });
-    console.log('Ta tc : ', totalAmt, totalCount);
 
-    console.log('Form Data : ', this.form.value);
-    this.isSubmitted = true;
-    if (this.form.invalid) {
-      return;
-    }
-    this.commonService.postRequest('Order/createOrUpdate', this.form.value).subscribe((resp: any) => {
-      console.log('Save Resp', resp);
+    let formData = {
+      id: null,
+      itemCount: itemCount,
+      amount: this.totalAmount,
+      userMasterId: JSON.parse(localStorage.getItem('user-details')!).id,
+      isActive: true,
+      purchaseDetails: this.purchaseDetailsHolder
+    };
+
+    console.log('formData : ', formData);
+
+    this.commonService.postRequest('Purchase/createOrUpdate', formData).subscribe((resp: any) => {
       this.dialogRef.close(true);
     });
+  }
 
+  trackBy(index: number, item: any) {
+    return item.id;
   }
 }

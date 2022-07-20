@@ -1,7 +1,7 @@
 <div style="min-width: 50rem">
   <div class="d-flex align-items-center justify-content-between">
     <h1 mat-dialog-title class="w-100">{{mode}} Orders</h1>
-    <button mat-button mat-raised-button color="primary" (click)="addOrders()" class="pe-4 ps-2">
+    <button type="button" mat-button mat-raised-button color="primary" (click)="addOrders()" class="pe-4 ps-2">
       <mat-icon>add</mat-icon>
       Add Order
     </button>
@@ -40,7 +40,7 @@
             </button>
           </td>
         </tr>
-        <tr *ngIf="ordersHolder && ordersHolder.orderDetails && ordersHolder.orderDetails.length === 0">
+        <tr *ngIf="orderDetailsHolder.length === 0">
           <td colspan="100%">
             <h6 class="text-danger text-center m-0 bg-white py-3">Please Add Orders</h6>
           </td>
@@ -55,7 +55,7 @@
       </table>
       <hr class="my-0">
       <mat-card-actions align="end">
-        <button mat-button mat-dialog-close>Close</button>
+        <button type="button" mat-button mat-dialog-close>Close</button>
         <button type="submit" mat-button mat-raised-button color="primary">Submit</button>
       </mat-card-actions>
     </form>

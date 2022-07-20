@@ -20,7 +20,29 @@ export class PurchaseComponent implements OnInit {
 
   constructor(private commonService: CommonService, private _snackBar: MatSnackBar, private fb: FormBuilder, public dialog: MatDialog) {
   }
+// POST
+// Purchase/cancelPurchase
 
+// POST
+// Purchase/createOrUpdate
+
+// DELETE
+// Purchase/delete​/{id}
+
+// POST
+// Purchase/fetchCancelledPurchaseList
+
+// POST
+// Purchase/fetchPurchaseList
+
+// GET
+// Purchase/get​/{id}
+
+// GET
+// Purchase/getPurchaseReport
+
+// GET
+// Purchase/getPurchaseCancelReport
   ngOnInit(): void {
     this.getPurchaseList();
   }

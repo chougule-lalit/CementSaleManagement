@@ -4,17 +4,17 @@
       <div class="d-flex align-items-center justify-content-between">
         <span>Purchase List</span>
         <div>
-          <button mat-button mat-raised-button color="primary" (click)="add()">
+          <button type="button" mat-button mat-raised-button color="primary" (click)="add()">
             <mat-icon>add</mat-icon>
             Add Purchase
           </button>
-          <button mat-button mat-raised-button class="ms-2" routerLink="/cancelled-purchase">
+          <button type="button" mat-button mat-raised-button class="ms-2" routerLink="/cancelled-purchase">
             Cancelled Purchase
           </button>
-          <button mat-button mat-raised-button class="ms-2" (click)="getPurchaseReport()">
+          <button type="button" mat-button mat-raised-button class="ms-2" (click)="getPurchaseReport()">
             Download Purchase Report
           </button>
-          <button mat-button mat-raised-button class="ms-2" (click)="getCancelledPurchaseReport()">
+          <button type="button" mat-button mat-raised-button class="ms-2" (click)="getCancelledPurchaseReport()">
             Download Cancelled Purchase Report
           </button>
         </div>
