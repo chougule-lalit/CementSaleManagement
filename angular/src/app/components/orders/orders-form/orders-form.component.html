@@ -24,15 +24,15 @@
             <input type="text" formControlName="orderMasterId" class="form-control-sm form-control">
           </td>-->
           <td>
-            <select [(ngModel)]="item.productMasterId" (change)="updateAmt($event, i)" name="productMasterId" class="form-control-sm form-control">
+            <select [(ngModel)]="item.productMasterId" (change)="updateAmt($event, i)" name="productMasterId{{i}}" class="form-control-sm form-control">
               <option *ngFor="let product of productDDHolder" [value]="product.id">{{product.name}}</option>
             </select>
           </td>
           <td>
-            <input type="number" [(ngModel)]="item.count" (input)="updateCount($event, i)" oninput="validity.valid||(value='')" min="1" name="count" class="form-control-sm form-control">
+            <input type="number" [(ngModel)]="item.count" (input)="updateCount($event, i)" oninput="validity.valid||(value='')" min="1" name="count{{i}}" class="form-control-sm form-control">
           </td>
           <td>
-            <input type="text" [(ngModel)]="item.amount" name="amount" readonly disabled class="form-control-sm form-control">
+            <input type="text" [(ngModel)]="item.amount" name="amount{{i}}" readonly disabled class="form-control-sm form-control">
           </td>
           <td>
             <button mat-icon-button color="accent" (click)="removeOrders(i)">
