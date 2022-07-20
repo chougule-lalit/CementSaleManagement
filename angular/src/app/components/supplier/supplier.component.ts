@@ -31,7 +31,6 @@ export class SupplierComponent implements OnInit {
     };
 
     this.commonService.postRequest('UserMaster/fetchUserList', input).subscribe((result: any) => {
-      console.log('Get Data : ', result);
       this.dataSource = result.items;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -41,7 +40,6 @@ export class SupplierComponent implements OnInit {
   // add(): void {
   //   const dialogRef = this.dialog.open(SupplierFormComponent);
   //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log('The dialog was closed after insert : ', result);
   //     if (result) {
   //       this.getUserList();
   //     }
@@ -49,12 +47,10 @@ export class SupplierComponent implements OnInit {
   // }
   //
   // edit(editData: any): void {
-  //   console.log('Edit Data : ', editData);
   //   const dialogRef = this.dialog.open(SupplierFormComponent, {
   //     data: editData,
   //   });
   //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log('The dialog was closed after update : ', result);
   //     if (result) {
   //       this.getUserList();
   //     }
@@ -63,7 +59,6 @@ export class SupplierComponent implements OnInit {
   //
   // delete(id: any): void {
   //   this.commonService.postRequest('', id).subscribe((data) => {
-  //     console.log('User Delete Resp : ', data);
   //     this.getUserList();
   //   });
   // }

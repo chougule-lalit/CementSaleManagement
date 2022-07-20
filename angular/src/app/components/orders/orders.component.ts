@@ -32,7 +32,6 @@ export class OrdersComponent implements OnInit {
       skipCount: 0,
     };
     this.commonService.postRequest('Order/fetchOrderList', input).subscribe((result) => {
-      console.log('fetchUserList : ', result);
       this.dataSource = result.items;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -64,7 +63,6 @@ export class OrdersComponent implements OnInit {
   add(): void {
     const dialogRef = this.dialog.open(OrdersFormComponent);
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed after insert : ', result);
       if (result) {
         this.getOrdersList();
       }
@@ -72,12 +70,10 @@ export class OrdersComponent implements OnInit {
   }
 
   edit(editData: any): void {
-    console.log('Edit Data : ', editData);
     const dialogRef = this.dialog.open(OrdersFormComponent, {
       data: editData,
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed after update : ', result);
       if (result) {
         this.getOrdersList();
       }
@@ -85,21 +81,25 @@ export class OrdersComponent implements OnInit {
   }
 
   delete(id: any): void {
-    this.commonService.deleteRequestWithId('Order/delete', id).subscribe((data) => {
-      console.log('User Delete Resp : ', data);
-      this.getOrdersList();
-    });
+    if (confirm('Are You Sure! Delete this order')) {
+      this.commonService.deleteRequestWithId('Order/delete', id).subscribe((resp) => {
+        if (resp) {
+          this.openSnackBar('Order Deleted Successfully', 'Close');
+          this.getOrdersList();
+        }
+      });
+    }
   }
 
   cancelOrder(id: any): void {
-    console.log('id : ', id);
-    this.commonService.postRequest(`Order/cancelOrder?id=${id}`, {}).subscribe((resp) => {
-      console.log('User Delete Resp : ', resp);
-      if (resp) {
-        this.openSnackBar('Order Cancelled Successfully', 'Close');
-        this.getOrdersList();
-      }
-    });
+    if (confirm('Are You Sure! Cancel this order')) {
+      this.commonService.postRequest(`Order/cancelOrder?id=${id}`, {}).subscribe((resp) => {
+        if (resp) {
+          this.openSnackBar('Order Cancelled Successfully', 'Close');
+          this.getOrdersList();
+        }
+      });
+    }
   }
 
   openSnackBar(message: string, action: string) {

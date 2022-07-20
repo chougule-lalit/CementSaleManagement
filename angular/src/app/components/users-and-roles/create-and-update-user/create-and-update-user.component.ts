@@ -25,7 +25,6 @@ export class CreateAndUpdateUserComponent implements OnInit {
   getRoles(): void {
     this.commonService.getRequest('RoleMaster/getRoleDropdown').subscribe((result) => {
       this.roles = result;
-      console.log('Roles : ', this.roles);
     });
   }
 
@@ -44,7 +43,6 @@ export class CreateAndUpdateUserComponent implements OnInit {
     });
 
     if (this.data) {
-      console.log('Edit Data : ', this.data);
       this.mode = 'Update';
       this.selectedRole = this.data.roleId;
       this.form.patchValue({
@@ -54,9 +52,6 @@ export class CreateAndUpdateUserComponent implements OnInit {
         email: this.data.email,
         phone: this.data.phone,
       });
-
-      console.log('patchValue : ', this.form.value);
-
     }
   }
 
@@ -68,14 +63,12 @@ export class CreateAndUpdateUserComponent implements OnInit {
     this.form.patchValue({
       roleId: this.selectedRole
     });
-    console.log('Form Data : ', this.form.value);
     this.isSubmitted = true;
     if (this.form.invalid) {
       return;
     }
 
     this.commonService.createOrUpdateUser(this.form.value).subscribe((resp) => {
-      console.log('User Save Resp', resp);
       this.dialogRef.close(true);
     });
   }

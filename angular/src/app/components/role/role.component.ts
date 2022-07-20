@@ -29,7 +29,6 @@ export class RoleComponent implements OnInit {
       skipCount: 0,
     };
     this.commonService.postRequest('RoleMaster/fetchRolesList', input).subscribe((result) => {
-      console.log('Get Data : ', result);
       this.dataSource = result.items;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -39,7 +38,6 @@ export class RoleComponent implements OnInit {
   add(): void {
     const dialogRef = this.dialog.open(RoleFormComponent);
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed after insert : ', result);
       if (result) {
         this.getData();
       }
@@ -47,12 +45,10 @@ export class RoleComponent implements OnInit {
   }
 
   edit(editData: any): void {
-    console.log('Edit Data : ', editData);
     const dialogRef = this.dialog.open(RoleFormComponent, {
       data: editData,
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed after update : ', result);
       if (result) {
         this.getData();
       }
@@ -61,7 +57,6 @@ export class RoleComponent implements OnInit {
 
   delete(id: any): void {
     this.commonService.deleteRequestWithParams('RoleMaster/delete', id).subscribe((result: any) => {
-      console.log('Delete Resp : ', result);
       this.getData();
     });
   }

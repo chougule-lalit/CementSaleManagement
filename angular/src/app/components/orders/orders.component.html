@@ -5,7 +5,6 @@
         <span>Orders List</span>
         <div>
           <button type="button" mat-button mat-raised-button color="primary" (click)="add()">
-            <mat-icon>add</mat-icon>
             Add Order
           </button>
           <button type="button" mat-button mat-raised-button class="ms-2" routerLink="/cancelled-orders">
@@ -34,7 +33,7 @@
 
       <ng-container matColumnDef="amount">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Amount</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{ row.amount }}</mat-cell>
+        <mat-cell *matCellDef="let row"> {{ row.amount | currency }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="itemCount">
@@ -52,7 +51,7 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
 
         <mat-cell *matCellDef="let row; let i = index">
-          <button  mat-flat-button color="primary" (click)="cancelOrder(row.orderId)" class="pe-5 me-2 ms-0 ps-2">
+          <button   (click)="cancelOrder(row.orderId)" class="btn btn-warning btn-sm me-2">
             Cancel Order
           </button>
           <button mat-icon-button color="accent" (click)="edit(row)">

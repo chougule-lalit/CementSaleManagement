@@ -12,7 +12,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   templateUrl: './purchase.component.html'
 })
 export class PurchaseComponent implements OnInit {
-  displayedColumns = ['id', 'supplierName', 'amount', 'itemCount', 'orderDate', 'cancelDate', 'actions'];
+  displayedColumns = ['id', 'supplierName', 'amount', 'itemCount', 'orderDate', 'actions'];
   blob;
   dataSource: any;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -20,29 +20,7 @@ export class PurchaseComponent implements OnInit {
 
   constructor(private commonService: CommonService, private _snackBar: MatSnackBar, private fb: FormBuilder, public dialog: MatDialog) {
   }
-// POST
-// Purchase/cancelPurchase
 
-// POST
-// Purchase/createOrUpdate
-
-// DELETE
-// Purchase/delete​/{id}
-
-// POST
-// Purchase/fetchCancelledPurchaseList
-
-// POST
-// Purchase/fetchPurchaseList
-
-// GET
-// Purchase/get​/{id}
-
-// GET
-// Purchase/getPurchaseReport
-
-// GET
-// Purchase/getPurchaseCancelReport
   ngOnInit(): void {
     this.getPurchaseList();
   }
@@ -53,7 +31,6 @@ export class PurchaseComponent implements OnInit {
       skipCount: 0,
     };
     this.commonService.postRequest('Purchase/fetchPurchaseList', input).subscribe((result) => {
-      console.log('Data : ', result);
       this.dataSource = result.items;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -62,7 +39,6 @@ export class PurchaseComponent implements OnInit {
 
   getPurchaseReport() {
     this.commonService.getFile('Purchase/getPurchaseReport').subscribe((result) => {
-      console.log('Resp D : ', result);
       this.blob = new Blob([result], {type: 'application/xlsx'});
       let downloadURL = window.URL.createObjectURL(result);
       let link = document.createElement('a');
@@ -74,7 +50,6 @@ export class PurchaseComponent implements OnInit {
 
   getCancelledPurchaseReport() {
     this.commonService.getFile('Purchase/getPurchaseCancelReport').subscribe((result) => {
-      console.log('Resp D : ', result);
       this.blob = new Blob([result], {type: 'application/xlsx'});
       let downloadURL = window.URL.createObjectURL(result);
       let link = document.createElement('a');
@@ -106,18 +81,25 @@ export class PurchaseComponent implements OnInit {
   }
 
   delete(id: any): void {
-    this.commonService.deleteRequestWithId('Purchase/delete', id).subscribe((data) => {
-      this.getPurchaseList();
-    });
+    if (confirm('Are you sure! Delete this purchase')) {
+      this.commonService.deleteRequestWithId('Purchase/delete', id).subscribe((resp) => {
+        if (resp) {
+          this.openSnackBar('Purchase Deleted Successfully', 'Close');
+          this.getPurchaseList();
+        }
+      });
+    }
   }
 
   cancelPurchase(id: any): void {
-    this.commonService.postRequest(`Purchase/cancelPurchase?id=${id}`, {id}).subscribe((resp) => {
-      if (resp) {
-        this.openSnackBar('Purchase Cancelled Successfully', 'Close');
-        this.getPurchaseList();
-      }
-    });
+    if (confirm('Are you sure! Cancel this purchase')) {
+      this.commonService.postRequest(`Purchase/cancelPurchase?id=${id}`, {id}).subscribe((resp) => {
+        if (resp) {
+          this.openSnackBar('Purchase Cancelled Successfully', 'Close');
+          this.getPurchaseList();
+        }
+      });
+    }
   }
 
   openSnackBar(message: string, action: string) {

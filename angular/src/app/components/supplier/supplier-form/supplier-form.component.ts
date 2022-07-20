@@ -42,7 +42,6 @@ export class SupplierFormComponent implements OnInit {
     });
 
     if (this.data) {
-      console.log('Edit Data : ', this.data);
       this.mode = 'Update';
       this.form.patchValue({
         id: this.data.id,
@@ -52,9 +51,6 @@ export class SupplierFormComponent implements OnInit {
         email: this.data.email,
         phone: this.data.phone,
       });
-
-      console.log('patchValue : ', this.form.value);
-
     }
   }
 
@@ -63,7 +59,6 @@ export class SupplierFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('Form Data : ', this.form.value);
     this.isSubmitted = true;
     if (this.form.invalid) {
       return;
@@ -78,7 +73,6 @@ export class SupplierFormComponent implements OnInit {
       })
     }
     this.commonService.postRequest('SupplierMaster/createOrUpdate', this.form.value).subscribe((resp) => {
-      console.log('Save Resp', resp);
       this.dialogRef.close(true);
     });
   }

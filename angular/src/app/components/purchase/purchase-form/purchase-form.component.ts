@@ -13,7 +13,9 @@ export class PurchaseFormComponent implements OnInit {
   productDDHolder: any[] = [];
   purchaseDetailsHolder: any[] = [];
   totalAmount = 0;
-
+  totalCount = 0;
+  cancelDate!: any;
+  orderDate!: any;
   constructor(
     public dialogRef: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -22,42 +24,22 @@ export class PurchaseFormComponent implements OnInit {
   ) {
   }
 
-  getSupplierList() {
-    this.commonService.getRequest('').subscribe((result: any) => {
-      this.supplierHolder = result;
-    })
-  }
-
-// POST
-// Purchase/cancelPurchase
-
-// POST
-// Purchase/createOrUpdate
-
-// DELETE
-// Purchase/delete​/{id}
-
-// POST
-// Purchase/fetchCancelledPurchaseList
-
-// POST
-// Purchase/fetchPurchaseList
-
-// GET
-// Purchase/get​/{id}
-
-// GET
-// Purchase/getPurchaseReport
-
-// GET
-// Purchase/getPurchaseCancelReport
-
 
   ngOnInit(): void {
     if (this.data) {
       this.mode = 'Update';
     }
     this.getProduct();
+    if (this.data) {
+      this.mode = 'Update';
+      this.commonService.getRequestWithId('Purchase/get', this.data.purchaseId).subscribe((resp) => {
+        this.cancelDate = resp.cancelDate;
+        this.orderDate = resp.orderDate;
+        this.purchaseDetailsHolder = resp.purchaseDetails;
+        this.totalAmount = resp.amount;
+        this.totalCount = resp.itemCount;
+      });
+    }
   }
 
 
@@ -110,7 +92,9 @@ export class PurchaseFormComponent implements OnInit {
 
   totalAmt() {
     this.totalAmount = 0;
+    this.totalCount = 0;
     this.purchaseDetailsHolder.forEach((item) => {
+      this.totalCount = this.totalCount + item.count;
       this.totalAmount = +item.amount + +this.totalAmount;
     });
   }
@@ -127,8 +111,8 @@ export class PurchaseFormComponent implements OnInit {
     });
 
 
-    let formData = {
-      id: null,
+    let formData: any = {
+      id: this.data?.purchaseId ? this.data.purchaseId : null,
       itemCount: itemCount,
       amount: this.totalAmount,
       userMasterId: JSON.parse(localStorage.getItem('user-details')!).id,
@@ -136,8 +120,10 @@ export class PurchaseFormComponent implements OnInit {
       purchaseDetails: this.purchaseDetailsHolder
     };
 
-    console.log('formData : ', formData);
-
+    if(this.data?.orderId && this.cancelDate && this.orderDate){
+      formData.cancelDate = this.cancelDate;
+      formData.orderDate = this.orderDate;
+    }
     this.commonService.postRequest('Purchase/createOrUpdate', formData).subscribe((resp: any) => {
       this.dialogRef.close(true);
     });

@@ -14,13 +14,11 @@ export class RoleGuard implements CanActivate {
 
     // let roles = '';
     // this.commonService.getRoleDropdown().subscribe((result) => {
-    //   console.log('Roles in Role Guard : ', result);
     //   if (JSON.parse(localStorage.getItem('user-details')!).role === result.id) {
     //     roles = result.name;
     //   }
     // })
 
-    // console.log('Roles in Role Guard Called : ', route.data.expectedRoles, JSON.parse(localStorage.getItem('user-details')!).role);
     if (route.data.expectedRoles == JSON.parse(localStorage.getItem('user-details')!).role) {
       return true;
     }

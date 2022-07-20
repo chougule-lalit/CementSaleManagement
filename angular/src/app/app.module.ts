@@ -37,7 +37,7 @@ import {PurchaseFormComponent} from "./components/purchase/purchase-form/purchas
 import { CancelledOrdersListComponent } from './components/orders/cancelled-orders-list/cancelled-orders-list.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { CancelledPurchaseListComponent } from './components/purchase/cancelled-purchase-list/cancelled-purchase-list.component';
-
+import {MatTooltipModule} from '@angular/material/tooltip';
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,6 +81,7 @@ import { CancelledPurchaseListComponent } from './components/purchase/cancelled-
     MatSelectModule,
     MatPaginatorModule,
     MatSnackBarModule,
+    MatTooltipModule,
   ],
   providers: [{provide: DEFAULT_CURRENCY_CODE, useValue: 'INR' }],
   bootstrap: [AppComponent],

@@ -35,7 +35,6 @@ export class WorkersFormComponent implements OnInit {
     });
 
     if (this.data) {
-      console.log('Edit Data : ', this.data);
       this.mode = 'Update';
       this.form.patchValue({
         id: this.data.id,
@@ -48,9 +47,6 @@ export class WorkersFormComponent implements OnInit {
         joiningDate: this.data.joiningDate,
         experience: this.data.experience
       });
-
-      console.log('patchValue : ', this.form.value);
-
     }
   }
 
@@ -59,13 +55,11 @@ export class WorkersFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('Form Data : ', this.form.value);
     this.isSubmitted = true;
     if (this.form.invalid) {
       return;
     }
     this.commonService.postRequest('CreateOrUpdateWoker', this.form.value).subscribe((resp) => {
-      console.log('Save Resp', resp);
       this.dialogRef.close(true);
     });
 

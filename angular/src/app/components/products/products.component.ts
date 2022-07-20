@@ -29,7 +29,6 @@ export class ProductsComponent implements OnInit {
       skipCount: 0,
     };
     this.commonService.postRequest('Product/fetchProductMasterList', input).subscribe((result: any) => {
-      console.log('Listing Page Data : ', result);
       this.dataSource = result.items;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -39,7 +38,6 @@ export class ProductsComponent implements OnInit {
   add(): void {
     const dialogRef = this.dialog.open(ProductFormComponent);
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed after insert : ', result);
       if (result) {
         this.getProductList();
       }
@@ -47,12 +45,10 @@ export class ProductsComponent implements OnInit {
   }
 
   edit(editData: any): void {
-    console.log('Edit Data : ', editData);
     const dialogRef = this.dialog.open(ProductFormComponent, {
       data: editData,
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed after update : ', result);
       if (result) {
         this.getProductList();
       }
@@ -61,7 +57,6 @@ export class ProductsComponent implements OnInit {
 
   delete(id: any): void {
     this.commonService.deleteRequestWithId('Product/delete', id).subscribe((data) => {
-      console.log('User Delete Resp : ', data);
       this.getProductList();
     });
   }

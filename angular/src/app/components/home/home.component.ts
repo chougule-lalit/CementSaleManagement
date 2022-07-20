@@ -60,13 +60,11 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('Form Data : ', this.form.value);
     this.isSubmitted = true;
     if (this.form.invalid) {
       return;
     }
     this.commonService.postRequest('Enquiry/createOrUpdate', this.form.value).subscribe((resp) => {
-      console.log('Save Resp', resp);
       this.isSubmitted = false;
       this.form.reset();
     })

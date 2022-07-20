@@ -13,6 +13,9 @@ export class OrdersFormComponent implements OnInit {
   productDDHolder: any[] = [];
   orderDetailsHolder: any[] = [];
   totalAmount = 0;
+  totalCount = 0;
+  cancelDate!: any;
+  orderDate!: any;
 
   constructor(
     public dialogRef: MatDialogRef<any>,
@@ -22,21 +25,25 @@ export class OrdersFormComponent implements OnInit {
   ) {
   }
 
-  getSupplierList() {
-    this.commonService.getRequest('').subscribe((result: any) => {
-      this.supplierHolder = result;
-    })
-  }
-
   ngOnInit(): void {
     if (this.data) {
       this.mode = 'Update';
     }
     this.getProduct();
+    if (this.data) {
+      this.mode = 'Update';
+      this.commonService.getRequestWithId(`Order/get`, this.data.orderId).subscribe((resp) => {
+        this.cancelDate = resp.cancelDate;
+        this.orderDate = resp.orderDate;
+        this.orderDetailsHolder = resp.orderDetails;
+        this.totalAmount = resp.amount;
+        this.totalCount = resp.itemCount;
+      });
+    }
   }
 
 
-  removeOrders(i: number, ) {
+  removeOrders(i: number,) {
     this.orderDetailsHolder.splice(i, 1);
     this.totalAmount = 0;
     this.totalAmt();
@@ -73,6 +80,7 @@ export class OrdersFormComponent implements OnInit {
   updateCount(event: any, i: number) {
     let count = +event.target.value;
     if (count > 0) {
+
       this.productDDHolder.filter((item) => {
         if (+item.id === +this.orderDetailsHolder[i].productMasterId) {
           this.orderDetailsHolder[i].amount = +item.price * +count;
@@ -86,7 +94,9 @@ export class OrdersFormComponent implements OnInit {
 
   totalAmt() {
     this.totalAmount = 0;
+    this.totalCount = 0;
     this.orderDetailsHolder.forEach((item) => {
+      this.totalCount = this.totalCount + item.count;
       this.totalAmount = +item.amount + +this.totalAmount;
     });
   }
@@ -103,8 +113,8 @@ export class OrdersFormComponent implements OnInit {
     });
 
 
-    let formData = {
-      id: null,
+    let formData: any = {
+      id: this.data?.orderId ? this.data.orderId : null,
       itemCount: itemCount,
       amount: this.totalAmount,
       userMasterId: JSON.parse(localStorage.getItem('user-details')!).id,
@@ -112,7 +122,11 @@ export class OrdersFormComponent implements OnInit {
       orderDetails: this.orderDetailsHolder
     };
 
-    console.log('formData : ', formData);
+    if (this.data?.orderId && this.cancelDate && this.orderDate) {
+      formData.cancelDate = this.cancelDate;
+      formData.orderDate = this.orderDate;
+    }
+
 
     this.commonService.postRequest('Order/createOrUpdate', formData).subscribe((resp: any) => {
       this.dialogRef.close(true);
@@ -122,36 +136,4 @@ export class OrdersFormComponent implements OnInit {
   trackBy(index: number, item: any) {
     return item.id;
   }
-}
-
-export class Orders implements IOrders {
-  id!: number | undefined;
-  itemCount!: number | undefined;
-  amount!: number | undefined;
-  userMasterId!: number | undefined;
-  isActive!: boolean | undefined;
-  orderDetails!: OrdersDetails[] | undefined;
-}
-
-export class OrdersDetails implements IOrdersDetails {
-  id!: number | undefined;
-  productMasterId!: number | undefined;
-  count!: number | undefined;
-  amount!: number | undefined;
-}
-
-export interface IOrders {
-  id: number | undefined;
-  itemCount: number | undefined;
-  amount: number | undefined;
-  userMasterId: number | undefined;
-  isActive: boolean | undefined;
-  orderDetails: IOrdersDetails[] | undefined;
-}
-
-export interface IOrdersDetails {
-  id: number | undefined;
-  productMasterId: number | undefined;
-  count: number | undefined;
-  amount: number | undefined;
 }

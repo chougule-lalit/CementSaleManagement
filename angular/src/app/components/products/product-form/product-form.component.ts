@@ -29,7 +29,6 @@ export class ProductFormComponent implements OnInit {
     });
 
     if (this.data) {
-      console.log('Edit Data : ', this.data);
       this.mode = 'Update';
       this.form.patchValue({
         id: this.data.id,
@@ -37,9 +36,6 @@ export class ProductFormComponent implements OnInit {
         companyName: this.data.companyName,
         price: this.data.price,
       });
-
-      console.log('patchValue : ', this.form.value);
-
     }
   }
 
@@ -48,13 +44,11 @@ export class ProductFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('Form Data : ', this.form.value);
     this.isSubmitted = true;
     if (this.form.invalid) {
       return;
     }
     this.commonService.postRequest('Product/createOrUpdate', this.form.value).subscribe((resp) => {
-      console.log('Save Resp', resp);
       this.dialogRef.close(true);
     });
   }

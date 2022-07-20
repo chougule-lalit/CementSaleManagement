@@ -27,7 +27,6 @@ export class CancelledPurchaseListComponent implements OnInit {
       skipCount: 0,
     };
     this.commonService.postRequest('Purchase/fetchCancelledPurchaseList', input).subscribe((result) => {
-      console.log('Result : ', result);
       this.dataSource = result.items;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

@@ -26,13 +26,12 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {
     if (localStorage.getItem('user-details')) {
-      this.router.navigate(['/main/home']);
+      this.router.navigate(['/home']);
     }
   }
 
   getRoleDropdown(){
     this.commonService.getRoleDropdown().subscribe((result) => {
-      console.log('Role Dropdown : ', result);
       this.roleHolder = result;
     })
   }
@@ -60,14 +59,12 @@ export class LoginComponent implements OnInit {
       status: false,
       message: ''
     };
-    console.log('Login Form Data : ', this.loginForm.value);
     this.isLoginFormSubmitted = true;
     if (this.loginForm.invalid) {
       return;
     }
 
     this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe((data) => {
-      console.log('Login Resp : ', data);
       if (data.isSuccess) {
         this.router.navigate(['/home']);
       } else {
@@ -101,9 +98,6 @@ export class LoginComponent implements OnInit {
   }
 
   onRegisterFormSubmit(): void {
-    console.log('Register Form Data : ', this.registerForm.value);
-    console.log('Register Form Valid : ', this.registerForm.valid);
-    console.log('Role Id : ', this.roleId);
     this.isRegisterFormSubmitted = true;
     if (this.registerForm.invalid) {
       return;
@@ -120,7 +114,6 @@ export class LoginComponent implements OnInit {
     };
     delete formData.conf_password;
     this.commonService.createOrUpdateUser(formData).subscribe((resp) => {
-      console.log('Register Resp : ', resp);
       this.loginOrRegister = true;
     });
   }

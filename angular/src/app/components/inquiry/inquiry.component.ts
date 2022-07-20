@@ -46,7 +46,6 @@ export class InquiryComponent implements OnInit {
     ];
     this.dataSource = data;
     this.commonService.postRequest('Enquiry/fetchEnquiryList', input).subscribe((result) => {
-      console.log('Get Data : ', result);
       this.dataSource = result.items;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -56,7 +55,6 @@ export class InquiryComponent implements OnInit {
   add(): void {
     const dialogRef = this.dialog.open(CreateAndUpdateModalComponent);
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed after insert : ', result);
       if (result) {
         this.getData();
       }
@@ -64,12 +62,10 @@ export class InquiryComponent implements OnInit {
   }
 
   edit(editData: any): void {
-    console.log('Edit Data : ', editData);
     const dialogRef = this.dialog.open(CreateAndUpdateModalComponent, {
       data: editData,
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed after update : ', result);
       if (result) {
         this.getData();
       }
@@ -78,7 +74,6 @@ export class InquiryComponent implements OnInit {
 
   delete(id: any): void {
     this.commonService.deleteRequestWithId('Enquiry/delete', id).subscribe((data) => {
-      console.log('Delete Resp : ', data);
       this.getData();
     });
   }
