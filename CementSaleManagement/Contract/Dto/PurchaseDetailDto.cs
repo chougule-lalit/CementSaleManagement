@@ -7,9 +7,9 @@ namespace CementSaleManagement.Contract.Dto
 {
     public class PurchaseDetailDto : EntityDto
     {
-        public int PurchaseMasterId { get; set; }
+        public int? PurchaseMasterId { get; set; }
 
-        public int ProductMasterId { get; set; }
+        public int? ProductMasterId { get; set; }
 
         public int Count { get; set; }
 

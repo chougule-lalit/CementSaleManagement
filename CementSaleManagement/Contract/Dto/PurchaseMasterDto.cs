@@ -29,7 +29,7 @@ namespace CementSaleManagement.Contract.Dto
 
     public class PurchaseDto
     {
-        public int PurchaseId { get; set; }
+        public int? PurchaseId { get; set; }
 
         public DateTime PurchaseDate { get; set; }
 

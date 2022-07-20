@@ -7,9 +7,9 @@ namespace CementSaleManagement.Contract.Dto
 {
     public class OrderDetailDto : EntityDto
     {
-        public int OrderMasterId { get; set; }
+        public int? OrderMasterId { get; set; }
 
-        public int ProductMasterId { get; set; }
+        public int? ProductMasterId { get; set; }
 
         public int Count { get; set; }
 
